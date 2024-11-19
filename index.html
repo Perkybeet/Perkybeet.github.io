@@ -3,12 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuestionario de Kotlin Avanzado</title>
-    <!-- Integración de Highlight.js para resaltar código -->
+    <title>Cuestionario de procesos</title>
+    <!-- Integración de Highlight.js para resaltar código en preguntas y respuestas -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
+    <!-- Estilos y scripts para Monaco Editor -->
+    <style>
+        /* Estilos para el contenedor del editor */
+        .code-editor-container {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+    </style>
+    <!-- El resto de tus estilos aquí -->
     <style>
         /* Reset de estilos básicos */
         * {
@@ -482,8 +493,8 @@
             <div class="form-group">
                 <label>Número de Preguntas:</label>
                 <select id="numQuestions">
-                    <option value="5">5</option>
-                    <option value="10" selected>10</option>
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
                 </select>
@@ -508,7 +519,7 @@
                 <input type="file" id="importBtn" accept=".json">
             </div>
             <div class="form-group">
-                <p id="totalTime">Tiempo total: 200 segundos</p>
+                <p id="totalTime">Tiempo total: 100 segundos</p>
             </div>
             <button type="button" id="startQuizBtn">Comenzar Cuestionario</button>
         </form>
@@ -526,7 +537,7 @@
 
         <!-- Contenido del Cuestionario -->
         <div id="quizContent" class="animate-slideInRight">
-            <h1>Cuestionario de Kotlin</h1>
+            <h1>Cuestionario de Python sobre Procesos</h1>
             <form id="quizForm">
                 <!-- Las preguntas se cargarán aquí dinámicamente -->
             </form>
@@ -546,6 +557,15 @@
     <!-- Temporizador -->
     <div id="timer"></div>
 
+    <!-- Scripts para Monaco Editor -->
+    <!-- Cargar Monaco Editor desde CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
+    <script>
+        // Configuración para cargar Monaco Editor
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs' }});
+    </script>
+
+    <!-- Tu script principal -->
     <script>
         const QUESTIONS_URL = 'questions.json'; // Ruta al archivo JSON con las preguntas
         const secondsPerQuestion = 20;
@@ -556,6 +576,7 @@
         let markedQuestions = new Set();
         let timerInterval;
         let timeLeft = 0; // Tiempo total en segundos
+        let codeEditors = {}; // Objeto para almacenar las instancias de los editores
 
         // Referencias a elementos del DOM
         const configPanel = document.getElementById('configPanel');
@@ -671,7 +692,7 @@
         }
 
         // Cargar las preguntas desde el JSON
-        function fetchQuestions(numQuestions = 10, typesSelected = ['multiple-choice', 'fill-in-the-blank', 'code']) {
+        function fetchQuestions(numQuestions = 5, typesSelected = ['multiple-choice', 'fill-in-the-blank', 'code']) {
             fetch(QUESTIONS_URL)
                 .then(response => response.json())
                 .then(data => {
@@ -763,64 +784,77 @@
                     });
                     optionsDiv.appendChild(input);
                 } else if (q.type === 'code') {
-                        // Mostrar el código de la pregunta, si existe
-                        if (q.code) {
-                            const pre = document.createElement('pre');
-                            pre.classList.add('code-block');
-                            const code = document.createElement('code');
-                            code.classList.add('language-kotlin');
-                            code.textContent = q.code;
-                            pre.appendChild(code);
-                            optionsDiv.appendChild(pre);
-                            hljs.highlightBlock(code);
-                        }
+                    // Mostrar el código de la pregunta, si existe
+                    if (q.code) {
+                        const pre = document.createElement('pre');
+                        pre.classList.add('code-block');
+                        const code = document.createElement('code');
+                        code.classList.add('language-python');
+                        code.textContent = q.code;
+                        pre.appendChild(code);
+                        optionsDiv.appendChild(pre);
+                        hljs.highlightBlock(code);
+                    }
 
-                        if (q.options && q.options.length > 0) {
-                            // Si hay opciones, mostrar como opción múltiple
-                            q.options.forEach((option, i) => {
-                                const label = document.createElement('label');
+                    if (q.options && q.options.length > 0) {
+                        // Si hay opciones, mostrar como opción múltiple
+                        q.options.forEach((option, i) => {
+                            const label = document.createElement('label');
 
-                                const input = document.createElement('input');
-                                input.type = 'radio';
-                                input.name = `question${index}`;
-                                input.value = i;
-                                input.addEventListener('change', () => {
-                                    userAnswers[index] = i;
-                                    updateProgress();
-                                    updateNavButton(index);
-                                    if (mode === 'showAnswer') {
-                                        displayCorrectAnswerCode(index);
-                                        disableOptions(index);
-                                        clearInterval(timerInterval); // Detener el temporizador total
-                                    }
-                                });
-
-                                const optionText = document.createElement('span');
-                                optionText.innerHTML = escapeHTML(option);
-
-                                label.appendChild(input);
-                                label.appendChild(optionText);
-                                optionsDiv.appendChild(label);
-                            });
-                        } else {
-                            // Si no hay opciones, mostrar textarea para ingresar código
-                            const textarea = document.createElement('textarea');
-                            textarea.name = `question${index}`;
-                            textarea.rows = 5;
-                            textarea.placeholder = 'Escribe tu respuesta aquí...';
-                            textarea.addEventListener('input', () => {
-                                userAnswers[index] = textarea.value.trim();
+                            const input = document.createElement('input');
+                            input.type = 'radio';
+                            input.name = `question${index}`;
+                            input.value = i;
+                            input.addEventListener('change', () => {
+                                userAnswers[index] = i;
                                 updateProgress();
                                 updateNavButton(index);
                                 if (mode === 'showAnswer') {
                                     displayCorrectAnswerCode(index);
-                                    disableTextarea(index);
+                                    disableOptions(index);
                                     clearInterval(timerInterval); // Detener el temporizador total
                                 }
                             });
-                            optionsDiv.appendChild(textarea);
-                        }
+
+                            const optionText = document.createElement('span');
+                            optionText.innerHTML = escapeHTML(option);
+
+                            label.appendChild(input);
+                            label.appendChild(optionText);
+                            optionsDiv.appendChild(label);
+                        });
+                    } else {
+                        // Si no hay opciones, utilizar Monaco Editor
+                        const editorContainer = document.createElement('div');
+                        editorContainer.classList.add('code-editor-container');
+                        editorContainer.id = `editor${index}`;
+                        optionsDiv.appendChild(editorContainer);
+
+                        // Inicializar Monaco Editor
+                        require(['vs/editor/editor.main'], function () {
+                            const editor = monaco.editor.create(editorContainer, {
+                                value: '',
+                                language: 'python',
+                                theme: 'vs-light',
+                                automaticLayout: true,
+                            });
+
+                            // Almacenar la instancia del editor
+                            codeEditors[index] = editor;
+
+                            editor.onDidChangeModelContent(() => {
+                                userAnswers[index] = editor.getValue();
+                                updateProgress();
+                                updateNavButton(index);
+                                if (mode === 'showAnswer') {
+                                    displayCorrectAnswerCode(index);
+                                    disableEditor(index);
+                                    clearInterval(timerInterval); // Detener el temporizador total
+                                }
+                            });
+                        });
                     }
+                }
 
                 questionDiv.appendChild(optionsDiv);
                 quizForm.appendChild(questionDiv);
@@ -947,15 +981,28 @@
                 });
             } else {
                 // Pregunta de código con entrada de texto
-                const correctAnswer = question.answer.trim();
-                const userAnswer = userAnswers[index] ? userAnswers[index].trim() : '';
-                const textarea = optionsDiv.querySelector('textarea');
-                if (userAnswer === correctAnswer) {
-                    textarea.style.border = '2px solid #28a745';
-                    textarea.style.backgroundColor = '#d4edda';
+                const editor = codeEditors[index];
+                editor.updateOptions({ readOnly: true });
+
+                const userAnswer = userAnswers[index];
+                let isCorrect = true;
+                if (question.validation && question.validation.length > 0) {
+                    question.validation.forEach(element => {
+                        if (!userAnswer.includes(element)) {
+                            isCorrect = false;
+                        }
+                    });
                 } else {
-                    textarea.style.border = '2px solid #dc3545';
-                    textarea.style.backgroundColor = '#f8d7da';
+                    // Comparar códigos normalizados si no hay validación
+                    const userCodeNormalized = userAnswer.replace(/\s+/g, '');
+                    const correctCodeNormalized = question.answer.replace(/\s+/g, '');
+                    isCorrect = (userCodeNormalized === correctCodeNormalized);
+                }
+
+                if (isCorrect) {
+                    editor.getContainerDomNode().style.border = '2px solid #28a745';
+                } else {
+                    editor.getContainerDomNode().style.border = '2px solid #dc3545';
                 }
             }
 
@@ -983,10 +1030,11 @@
             input.disabled = true;
         }
 
-        function disableTextarea(index) {
-            const questionDiv = document.getElementById(`question${index}`);
-            const textarea = questionDiv.querySelector('.options textarea');
-            textarea.disabled = true;
+        function disableEditor(index) {
+            const editor = codeEditors[index];
+            if (editor) {
+                editor.updateOptions({ readOnly: true });
+            }
         }
 
         // Manejar el envío del formulario
@@ -1005,6 +1053,16 @@
         // Función para enviar el cuestionario
         function submitQuiz() {
             clearInterval(timerInterval);
+
+            // Obtener las respuestas de los editores de código
+            selectedQuestions.forEach((q, index) => {
+                if (q.type === 'code' && !q.options) {
+                    const editor = codeEditors[index];
+                    if (editor) {
+                        userAnswers[index] = editor.getValue();
+                    }
+                }
+            });
 
             let score = 0;
             selectedQuestions.forEach((q, index) => {
@@ -1025,8 +1083,23 @@
                         }
                     } else {
                         // Pregunta de código con entrada de texto
-                        if (answer && answer.trim() === q.answer.trim()) {
-                            score++;
+                        if (answer) {
+                            let isCorrect = true;
+                            if (q.validation && q.validation.length > 0) {
+                                q.validation.forEach(element => {
+                                    if (!answer.includes(element)) {
+                                        isCorrect = false;
+                                    }
+                                });
+                            } else {
+                                // Comparar códigos normalizados si no hay validación
+                                const userCodeNormalized = answer.replace(/\s+/g, '');
+                                const correctCodeNormalized = q.answer.replace(/\s+/g, '');
+                                isCorrect = (userCodeNormalized === correctCodeNormalized);
+                            }
+                            if (isCorrect) {
+                                score++;
+                            }
                         }
                     }
                 }
@@ -1048,7 +1121,28 @@
                 const isCorrect = (
                     (q.type === 'multiple-choice' && userAnswer === q.answer) ||
                     (q.type === 'fill-in-the-blank' && userAnswer && userAnswer.toLowerCase() === q.answer.toLowerCase()) ||
-                    (q.type === 'code' && userAnswer && userAnswer.trim() === q.answer.trim())
+                    (q.type === 'code' && (function() {
+                        if (q.options && q.options.length > 0) {
+                            return userAnswer === q.answer;
+                        } else {
+                            if (userAnswer) {
+                                let valid = true;
+                                if (q.validation && q.validation.length > 0) {
+                                    q.validation.forEach(element => {
+                                        if (!userAnswer.includes(element)) {
+                                            valid = false;
+                                        }
+                                    });
+                                    return valid;
+                                } else {
+                                    const userCodeNormalized = userAnswer.replace(/\s+/g, '');
+                                    const correctCodeNormalized = q.answer.replace(/\s+/g, '');
+                                    return userCodeNormalized === correctCodeNormalized;
+                                }
+                            }
+                            return false;
+                        }
+                    })())
                 );
                 const reviewQuestion = document.createElement('div');
                 reviewQuestion.classList.add('review-question');
@@ -1060,69 +1154,47 @@
                 reviewQuestion.appendChild(reviewTitle);
 
                 // Crear la respuesta del usuario
-                const userResponse = document.createElement('p');
-                if (q.type === 'code') {
-                    if (q.options && q.options.length > 0) {
-                        // Pregunta de código con opciones
-                        const userResponse = document.createElement('p');
-                        userResponse.innerHTML = `<strong>Tu respuesta:</strong> ${escapeHTML(q.options[userAnswer] || 'No respondida')}`;
-                        reviewQuestion.appendChild(userResponse);
-
-                        const correctResponse = document.createElement('p');
-                        correctResponse.innerHTML = `<strong>Respuesta correcta:</strong> ${escapeHTML(q.options[q.answer])}`;
-                        reviewQuestion.appendChild(correctResponse);
-                    } else {
-                        // Pregunta de código con entrada de texto
-                        // Código existente para mostrar el código ingresado y la respuesta correcta
-                        const userResponse = document.createElement('p');
-                        userResponse.innerHTML = `<strong>Tu respuesta:</strong>`;
-                        const preUser = document.createElement('pre');
-                        const codeUser = document.createElement('code');
-                        codeUser.classList.add('language-kotlin');
-                        codeUser.textContent = userAnswer || 'No respondida';
-                        preUser.appendChild(codeUser);
-                        userResponse.appendChild(preUser);
-                        reviewQuestion.appendChild(userResponse);
-
-                        const correctResponse = document.createElement('p');
-                        correctResponse.innerHTML = `<strong>Respuesta correcta:</strong>`;
-                        const preCorrect = document.createElement('pre');
-                        const codeCorrect = document.createElement('code');
-                        codeCorrect.classList.add('language-kotlin');
-                        codeCorrect.textContent = q.answer;
-                        preCorrect.appendChild(codeCorrect);
-                        correctResponse.appendChild(preCorrect);
-                        reviewQuestion.appendChild(correctResponse);
-                    }
-                }
-                reviewQuestion.appendChild(userResponse);
-
-                // Crear la respuesta correcta
                 if (q.type === 'code') {
                     // Mostrar el código de la pregunta
-                    const codeQuestionTitle = document.createElement('p');
-                    codeQuestionTitle.innerHTML = `<strong>Código de la pregunta:</strong>`;
-                    reviewQuestion.appendChild(codeQuestionTitle);
+                    if (q.code) {
+                        const codeQuestionTitle = document.createElement('p');
+                        codeQuestionTitle.innerHTML = `<strong>Código de la pregunta:</strong>`;
+                        reviewQuestion.appendChild(codeQuestionTitle);
 
-                    const questionCode = document.createElement('pre');
-                    const codeBlock = document.createElement('code');
-                    codeBlock.classList.add('language-kotlin');
-                    codeBlock.textContent = q.code;
-                    questionCode.appendChild(codeBlock);
-                    reviewQuestion.appendChild(questionCode);
+                        const questionCode = document.createElement('pre');
+                        const codeBlock = document.createElement('code');
+                        codeBlock.classList.add('language-python');
+                        codeBlock.textContent = q.code;
+                        questionCode.appendChild(codeBlock);
+                        reviewQuestion.appendChild(questionCode);
+                    }
+
+                    // Mostrar la respuesta del usuario
+                    const userResponse = document.createElement('p');
+                    userResponse.innerHTML = `<strong>Tu respuesta:</strong>`;
+                    const preUser = document.createElement('pre');
+                    const codeUser = document.createElement('code');
+                    codeUser.classList.add('language-python');
+                    codeUser.textContent = userAnswer || 'No respondida';
+                    preUser.appendChild(codeUser);
+                    userResponse.appendChild(preUser);
+                    reviewQuestion.appendChild(userResponse);
 
                     // Mostrar la respuesta correcta
-                    const correctAnswerTitle = document.createElement('p');
-                    correctAnswerTitle.innerHTML = `<strong>Respuesta correcta:</strong>`;
-                    reviewQuestion.appendChild(correctAnswerTitle);
-
-                    const correctAnswerPre = document.createElement('pre');
-                    const correctCode = document.createElement('code');
-                    correctCode.classList.add('language-kotlin');
-                    correctCode.textContent = q.answer;
-                    correctAnswerPre.appendChild(correctCode);
-                    reviewQuestion.appendChild(correctAnswerPre);
+                    const correctResponse = document.createElement('p');
+                    correctResponse.innerHTML = `<strong>Respuesta correcta:</strong>`;
+                    const preCorrect = document.createElement('pre');
+                    const codeCorrect = document.createElement('code');
+                    codeCorrect.classList.add('language-python');
+                    codeCorrect.textContent = q.answer;
+                    preCorrect.appendChild(codeCorrect);
+                    correctResponse.appendChild(preCorrect);
+                    reviewQuestion.appendChild(correctResponse);
                 } else {
+                    const userResponse = document.createElement('p');
+                    userResponse.innerHTML = `<strong>Tu respuesta:</strong> ${escapeHTML(userAnswer || 'No respondida')}`;
+                    reviewQuestion.appendChild(userResponse);
+
                     const correctResponse = document.createElement('p');
                     correctResponse.innerHTML = `<strong>Respuesta correcta:</strong> ${q.type === 'multiple-choice' ? escapeHTML(q.options[q.answer]) : escapeHTML(q.answer)}`;
                     reviewQuestion.appendChild(correctResponse);
