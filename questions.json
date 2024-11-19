@@ -493,5 +493,515 @@
         "code": "event = threading.Event()\n\ndef esperar_evento():\n    event.wait()\n    # Continuar ejecución\n\ndef set_evento():\n    __________",
         "answer": "event.set()",
         "explanation": "`event.set()` activa el evento, permitiendo que los hilos que esperan continúen."
+    },
+    {
+        "question": "¿Cuál de las siguientes opciones NO es un método para crear procesos en Python?",
+        "type": "multiple-choice",
+        "options": [
+            "os.fork()",
+            "multiprocessing.Process()",
+            "threading.Thread()",
+            "subprocess.Popen()"
+        ],
+        "answer": 2,
+        "explanation": "El módulo 'threading' se utiliza para crear hilos, no procesos."
+    },
+    {
+        "question": "En programación de sockets, ¿qué significa 'binding'?",
+        "type": "multiple-choice",
+        "options": [
+            "Cerrar un socket.",
+            "Asociar un socket a una dirección y puerto específicos.",
+            "Enviar datos a través de un socket.",
+            "Escuchar conexiones entrantes."
+        ],
+        "answer": 1,
+        "explanation": "El 'binding' asocia un socket a una dirección IP y un puerto."
+    },
+    {
+        "question": "¿Qué módulo en Python se utiliza para trabajar con colas de mensajes seguras entre hilos?",
+        "type": "multiple-choice",
+        "options": [
+            "queue",
+            "collections",
+            "threading",
+            "socket"
+        ],
+        "answer": 0,
+        "explanation": "El módulo 'queue' proporciona colas seguras para la comunicación entre hilos."
+    },
+    {
+        "question": "En el contexto de hilos, ¿qué es un 'daemon thread'?",
+        "type": "multiple-choice",
+        "options": [
+            "Un hilo que se ejecuta en primer plano.",
+            "Un hilo que se ejecuta en segundo plano y termina cuando lo hace el hilo principal.",
+            "Un hilo que nunca termina.",
+            "Un hilo que tiene mayor prioridad que otros."
+        ],
+        "answer": 1,
+        "explanation": "Los 'daemon threads' son hilos en segundo plano que se terminan automáticamente cuando finaliza el hilo principal."
+    },
+    {
+        "question": "¿Cuál es el resultado de ejecutar el siguiente código en Python?\n\n```python\nimport threading\n\ndef imprimir():\n    print('Hola desde el hilo')\n\nhilo = threading.Thread(target=imprimir)\nhilo.start()\nhilo.join()\nprint('Fin del programa')\n```",
+        "type": "multiple-choice",
+        "options": [
+            "Solo imprime 'Fin del programa'.",
+            "Imprime 'Hola desde el hilo' y luego 'Fin del programa'.",
+            "Imprime 'Fin del programa' y luego 'Hola desde el hilo'.",
+            "Genera un error de ejecución."
+        ],
+        "answer": 1,
+        "explanation": "El método 'join()' hace que el programa espere a que el hilo termine antes de continuar."
+    },
+    {
+        "question": "Completa: Para establecer un servidor que escuche en todas las interfaces de red disponibles, se utiliza la dirección IP `__________`.",
+        "type": "fill-in-the-blank",
+        "answer": "0.0.0.0",
+        "explanation": "`0.0.0.0` indica que el servidor debe escuchar en todas las interfaces disponibles."
+    },
+    {
+        "question": "¿Qué hace el método `socket.accept()`?",
+        "type": "multiple-choice",
+        "options": [
+            "Acepta una conexión entrante y devuelve una nueva conexión socket.",
+            "Cierra una conexión existente.",
+            "Envía datos a través del socket.",
+            "Pone el socket en modo de escucha."
+        ],
+        "answer": 0,
+        "explanation": "`accept()` espera una conexión entrante y devuelve un nuevo socket para esa conexión."
+    },
+    {
+        "question": "En Python, ¿cómo se define un hilo como 'daemon'?",
+        "type": "multiple-choice",
+        "options": [
+            "Estableciendo el atributo `daemon` a `True` antes de llamar a `start()`.",
+            "Llamando al método `setDaemon(True)` después de `start()`.",
+            "No es posible definir hilos 'daemon' en Python.",
+            "Pasando `daemon=True` al crear el objeto Thread."
+        ],
+        "answer": 0,
+        "explanation": "El atributo `daemon` debe establecerse en `True` antes de iniciar el hilo con `start()`."
+    },
+    {
+        "question": "¿Cuál es el propósito del método `threading.current_thread()`?",
+        "type": "multiple-choice",
+        "options": [
+            "Detener el hilo actual.",
+            "Obtener un objeto que representa al hilo actual.",
+            "Crear un nuevo hilo.",
+            "Cambiar el nombre del hilo actual."
+        ],
+        "answer": 1,
+        "explanation": "`current_thread()` devuelve una referencia al objeto Thread correspondiente al hilo que llama."
+    },
+    {
+        "question": "En el contexto de programación concurrente, ¿qué es un 'mutex'?",
+        "type": "multiple-choice",
+        "options": [
+            "Un tipo de excepción.",
+            "Un mecanismo que asegura que solo un hilo acceda a un recurso a la vez.",
+            "Un proceso que se ejecuta en segundo plano.",
+            "Un tipo de hilo especial."
+        ],
+        "answer": 1,
+        "explanation": "Un 'mutex' (mutual exclusion) es un mecanismo para prevenir acceso simultáneo a un recurso compartido."
+    },
+    {
+        "question": "Completa el código para crear una clase de hilo personalizado:\n\n```python\nimport threading\n\nclass MiHilo(threading.Thread):\n    def __init__(self):\n        super().__init__()\n\n    def run(self):\n        __________\n```",
+        "type": "fill-in-the-blank",
+        "answer": "pass  # Código del hilo",
+        "explanation": "Se debe implementar el método `run()` donde se define el comportamiento del hilo."
+    },
+    {
+        "question": "¿Qué hace el siguiente código?\n\n```python\nimport threading\n\nlock = threading.Lock()\n\nwith lock:\n    # Operaciones seguras\n    pass\n```",
+        "type": "multiple-choice",
+        "options": [
+            "Adquiere el lock y nunca lo libera.",
+            "Adquiere el lock y lo libera automáticamente al salir del bloque 'with'.",
+            "Genera un error porque 'lock' no se puede usar con 'with'.",
+            "No hace nada."
+        ],
+        "answer": 1,
+        "explanation": "El uso de 'with' asegura que el lock se libere automáticamente al salir del bloque."
+    },
+    {
+        "question": "En programación de sockets, ¿qué protocolo utiliza `socket.SOCK_DGRAM`?",
+        "type": "multiple-choice",
+        "options": [
+            "TCP",
+            "UDP",
+            "ICMP",
+            "HTTP"
+        ],
+        "answer": 1,
+        "explanation": "`SOCK_DGRAM` indica el uso del protocolo UDP."
+    },
+    {
+        "question": "¿Cuál es la salida del siguiente código?\n\n```python\nimport threading\n\ncontador = 0\n\ndef incrementar():\n    global contador\n    for _ in range(1000):\n        contador += 1\n\nhilos = []\nfor _ in range(10):\n    hilo = threading.Thread(target=incrementar)\n    hilos.append(hilo)\n    hilo.start()\n\nfor hilo in hilos:\n    hilo.join()\n\nprint(contador)\n```",
+        "type": "multiple-choice",
+        "options": [
+            "10000",
+            "Un número menor que 10000 debido a condiciones de carrera.",
+            "0",
+            "Genera un error."
+        ],
+        "answer": 1,
+        "explanation": "Sin protección de locks, las condiciones de carrera pueden causar resultados inconsistentes."
+    },
+    {
+        "question": "Completa: En Python, el método `__________` del objeto Thread se utiliza para verificar si un hilo está vivo.",
+        "type": "fill-in-the-blank",
+        "answer": "is_alive()",
+        "explanation": "`is_alive()` devuelve `True` si el hilo está activo."
+    },
+    {
+        "question": "¿Qué módulo en Python proporciona funciones para trabajar con tiempo y retrasos?",
+        "type": "multiple-choice",
+        "options": [
+            "datetime",
+            "time",
+            "threading",
+            "sched"
+        ],
+        "answer": 1,
+        "explanation": "El módulo 'time' incluye funciones para trabajar con el tiempo, como 'sleep()'."
+    },
+    {
+        "question": "En el contexto de programación de procesos, ¿qué es un 'PID'?",
+        "type": "multiple-choice",
+        "options": [
+            "Process Identifier",
+            "Protocol Internet Datagram",
+            "Programming Interface Descriptor",
+            "Process Interaction Data"
+        ],
+        "answer": 0,
+        "explanation": "'PID' significa 'Process Identifier', un número único asignado a cada proceso."
+    },
+    {
+        "question": "¿Cuál es el propósito del método `join()` en el módulo `multiprocessing`?",
+        "type": "multiple-choice",
+        "options": [
+            "Iniciar un nuevo proceso.",
+            "Unir dos procesos en uno solo.",
+            "Esperar a que un proceso hijo termine.",
+            "Terminar un proceso."
+        ],
+        "answer": 2,
+        "explanation": "`join()` hace que el proceso padre espere a que el proceso hijo termine."
+    },
+    {
+        "question": "Completa el código para manejar una excepción al intentar abrir un archivo inexistente:\n\n```python\ntry:\n    with open('archivo.txt', 'r') as f:\n        contenido = f.read()\nexcept __________ as e:\n    print('Error:', e)\n```",
+        "type": "fill-in-the-blank",
+        "answer": "FileNotFoundError",
+        "explanation": "La excepción `FileNotFoundError` se lanza cuando un archivo no existe."
+    },
+    {
+        "question": "¿Qué método se utiliza para enviar datos a través de un socket en Python?",
+        "type": "multiple-choice",
+        "options": [
+            "`send()`",
+            "`receive()`",
+            "`connect()`",
+            "`bind()`"
+        ],
+        "answer": 0,
+        "explanation": "`send()` envía datos a través del socket."
+    },
+    {
+        "question": "En el módulo `subprocess`, ¿qué hace el argumento `shell=True`?",
+        "type": "multiple-choice",
+        "options": [
+            "Ejecuta el comando a través del intérprete de comandos del sistema.",
+            "Evita el uso del intérprete de comandos.",
+            "Especifica que el comando es una lista.",
+            "No tiene ningún efecto."
+        ],
+        "answer": 0,
+        "explanation": "`shell=True` ejecuta el comando a través del shell del sistema operativo."
+    },
+    {
+        "question": "Completa: Para crear un socket no bloqueante en Python, se utiliza el método `socket.setblocking(__________)`.",
+        "type": "fill-in-the-blank",
+        "answer": "False",
+        "explanation": "Al establecer `setblocking(False)`, el socket no esperará indefinidamente."
+    },
+    {
+        "question": "¿Qué es un 'context manager' en Python?",
+        "type": "multiple-choice",
+        "options": [
+            "Una función que devuelve un objeto.",
+            "Una estructura que permite la asignación condicional.",
+            "Una forma de manejar recursos asegurando su correcta finalización.",
+            "Una clase que gestiona variables globales."
+        ],
+        "answer": 2,
+        "explanation": "Los 'context managers' permiten configurar y limpiar recursos automáticamente."
+    },
+    {
+        "question": "En programación de hilos, ¿qué es un 'thread pool'?",
+        "type": "multiple-choice",
+        "options": [
+            "Un conjunto de hilos preiniciados listos para ejecutar tareas.",
+            "Un tipo de excepción de hilos.",
+            "Un método para pausar hilos.",
+            "Una cola de mensajes entre hilos."
+        ],
+        "answer": 0,
+        "explanation": "Un 'thread pool' es un grupo de hilos que pueden reutilizarse para ejecutar tareas."
+    },
+    {
+        "question": "¿Cuál es el propósito de `asyncio` en Python?",
+        "type": "multiple-choice",
+        "options": [
+            "Proporcionar soporte para programación sincrónica.",
+            "Manejar operaciones de E/S asíncronas.",
+            "Crear interfaces gráficas de usuario.",
+            "Mejorar el rendimiento de cálculos matemáticos."
+        ],
+        "answer": 1,
+        "explanation": "`asyncio` es un módulo para escribir código concurrente usando corutinas y E/S asíncrona."
+    },
+    {
+        "question": "Completa el código para leer una línea de entrada del usuario:\n\n```python\nentrada = __________('Introduce un valor: ')\n```",
+        "type": "fill-in-the-blank",
+        "answer": "input",
+        "explanation": "`input()` lee una línea de entrada desde el usuario."
+    },
+    {
+        "question": "En el contexto de programación de sockets, ¿qué es un 'puerto'?",
+        "type": "multiple-choice",
+        "options": [
+            "Una dirección IP.",
+            "Un identificador numérico para distinguir aplicaciones o servicios.",
+            "Una interfaz de red física.",
+            "Un protocolo de red."
+        ],
+        "answer": 1,
+        "explanation": "Un puerto es un número que identifica un servicio específico en un host."
+    },
+    {
+        "question": "¿Qué hace el método `socket.connect()`?",
+        "type": "multiple-choice",
+        "options": [
+            "Inicia una conexión hacia un servidor.",
+            "Espera conexiones entrantes.",
+            "Cierra la conexión existente.",
+            "Envía datos a través del socket."
+        ],
+        "answer": 0,
+        "explanation": "`connect()` establece una conexión con un socket remoto."
+    },
+    {
+        "question": "En Python, ¿qué es el 'GIL'?",
+        "type": "multiple-choice",
+        "options": [
+            "Global Interpreter Lock",
+            "Graphical Interface Library",
+            "Generic Input Layer",
+            "Global Initialization List"
+        ],
+        "answer": 0,
+        "explanation": "El 'GIL' es un mecanismo que permite que solo un hilo ejecute código bytecode de Python a la vez."
+    },
+    {
+        "question": "Completa: Para pausar la ejecución de un programa por 5 segundos, se utiliza `time.__________(5)`.",
+        "type": "fill-in-the-blank",
+        "answer": "sleep",
+        "explanation": "`time.sleep(5)` detiene la ejecución durante 5 segundos."
+    },
+    {
+        "question": "¿Qué hace el método `os.kill()` en Python?",
+        "type": "multiple-choice",
+        "options": [
+            "Termina un proceso especificado por su PID.",
+            "Inicia un nuevo proceso.",
+            "Suspende temporalmente un proceso.",
+            "No es un método válido en Python."
+        ],
+        "answer": 0,
+        "explanation": "`os.kill(pid, señal)` envía una señal al proceso especificado, permitiendo terminarlo."
+    },
+    {
+        "question": "En programación concurrente, ¿qué es una 'barrera'?",
+        "type": "multiple-choice",
+        "options": [
+            "Un mecanismo para prevenir condiciones de carrera.",
+            "Un punto donde los hilos deben esperar hasta que todos lleguen antes de continuar.",
+            "Una excepción lanzada al detectar un deadlock.",
+            "Un método para acelerar la ejecución de hilos."
+        ],
+        "answer": 1,
+        "explanation": "Una barrera sincroniza hilos haciendo que esperen hasta que todos alcancen un punto común."
+    },
+    {
+        "question": "Completa el código para crear un socket UDP cliente:\n\n```python\nimport socket\n\ns = socket.socket(socket.AF_INET, socket.__________)\n```",
+        "type": "fill-in-the-blank",
+        "answer": "SOCK_DGRAM",
+        "explanation": "`SOCK_DGRAM` indica que se trata de un socket UDP."
+    },
+    {
+        "question": "¿Qué hace el siguiente código?\n\n```python\nimport threading\n\ncond = threading.Condition()\n\nwith cond:\n    cond.notify_all()\n```",
+        "type": "multiple-choice",
+        "options": [
+            "Notifica a todos los hilos esperando en la condición.",
+            "Espera a que todos los hilos notifiquen la condición.",
+            "Genera un error porque no hay hilos esperando.",
+            "Cierra todos los hilos."
+        ],
+        "answer": 0,
+        "explanation": "`notify_all()` despierta a todos los hilos que están esperando en la condición."
+    },
+    {
+        "question": "En el módulo `multiprocessing`, ¿qué es un 'Pool'?",
+        "type": "multiple-choice",
+        "options": [
+            "Un conjunto de hilos.",
+            "Un conjunto de procesos trabajadores para ejecutar tareas en paralelo.",
+            "Una cola de tareas.",
+            "Un mecanismo de comunicación entre procesos."
+        ],
+        "answer": 1,
+        "explanation": "Un 'Pool' en `multiprocessing` permite distribuir tareas entre múltiples procesos."
+    },
+    {
+        "question": "Completa: Para establecer una variable de entorno en Python, se utiliza `os.environ['NOMBRE'] = 'valor'`. Para obtener su valor, se utiliza `os.environ.__________('NOMBRE')`.",
+        "type": "fill-in-the-blank",
+        "answer": "get",
+        "explanation": "`os.environ.get('NOMBRE')` obtiene el valor de la variable de entorno."
+    },
+    {
+        "question": "¿Qué es un 'evento' en programación de hilos?",
+        "type": "multiple-choice",
+        "options": [
+            "Un tipo de excepción.",
+            "Un mecanismo para comunicar el estado entre hilos.",
+            "Un método para acelerar hilos.",
+            "Una función que detiene todos los hilos."
+        ],
+        "answer": 1,
+        "explanation": "Un 'evento' permite a los hilos esperar hasta que otro hilo señale que algo ha ocurrido."
+    },
+    {
+        "question": "En programación de sockets, ¿qué método se utiliza para enviar datos a un destino específico en un socket UDP?",
+        "type": "multiple-choice",
+        "options": [
+            "`sendto()`",
+            "`send()`",
+            "`write()`",
+            "`connect()`"
+        ],
+        "answer": 0,
+        "explanation": "`sendto()` envía datos a una dirección específica en sockets UDP."
+    },
+    {
+        "question": "Completa el código para manejar una excepción general en Python:\n\n```python\ntry:\n    # Código que puede generar una excepción\n    pass\nexcept __________ as e:\n    print('Ocurrió un error:', e)\n```",
+        "type": "fill-in-the-blank",
+        "answer": "Exception",
+        "explanation": "`Exception` es la clase base para todas las excepciones integradas no graves."
+    },
+    {
+        "question": "¿Qué hace el método `threading.Timer()`?",
+        "type": "multiple-choice",
+        "options": [
+            "Inicia un hilo después de un intervalo de tiempo especificado.",
+            "Mide el tiempo de ejecución de un hilo.",
+            "Termina un hilo después de un tiempo determinado.",
+            "No es un método válido en el módulo threading."
+        ],
+        "answer": 0,
+        "explanation": "`Timer()` crea un hilo que se ejecuta después de un retraso especificado."
+    },
+    {
+        "question": "En el contexto de procesos, ¿qué es un 'zombie process'?",
+        "type": "multiple-choice",
+        "options": [
+            "Un proceso que nunca se inició.",
+            "Un proceso que ha terminado pero aún tiene una entrada en la tabla de procesos.",
+            "Un proceso que consume todos los recursos del sistema.",
+            "Un proceso que está esperando a ser planificado."
+        ],
+        "answer": 1,
+        "explanation": "Un 'zombie process' es aquel que ha finalizado pero aún no ha sido limpiado por su proceso padre."
+    },
+    {
+        "question": "Completa: En Python, para obtener el número de hilos activos, se utiliza `threading.__________()`.",
+        "type": "fill-in-the-blank",
+        "answer": "active_count",
+        "explanation": "`active_count()` devuelve el número de hilos Thread activos."
+    },
+    {
+        "question": "¿Cuál es el propósito del módulo `selectors` en Python?",
+        "type": "multiple-choice",
+        "options": [
+            "Manejar operaciones de E/S de forma síncrona.",
+            "Proporcionar una interfaz de alto nivel para I/O multiplexada.",
+            "Crear interfaces gráficas de usuario.",
+            "Gestionar hilos y procesos."
+        ],
+        "answer": 1,
+        "explanation": "`selectors` permite esperar a que varios objetos de archivo estén listos para operaciones de E/S."
+    },
+    {
+        "question": "En programación concurrente, ¿qué es una 'condición de variable'?",
+        "type": "multiple-choice",
+        "options": [
+            "Una variable que cambia su valor en tiempo de ejecución.",
+            "Un mecanismo de sincronización que permite a los hilos esperar hasta que se cumpla una condición específica.",
+            "Un error en el código de los hilos.",
+            "Una función para detener todos los hilos."
+        ],
+        "answer": 1,
+        "explanation": "Una 'condición de variable' permite que los hilos esperen y notifiquen sobre ciertas condiciones."
+    },
+    {
+        "question": "Completa el código para ejecutar un comando del sistema y capturar su salida:\n\n```python\nimport subprocess\n\nresultado = subprocess.run(['ls', '-l'], stdout=subprocess.PIPE)\nsalida = resultado.__________\n```",
+        "type": "fill-in-the-blank",
+        "answer": "stdout",
+        "explanation": "`stdout` contiene la salida estándar del comando ejecutado."
+    },
+    {
+        "question": "¿Qué hace el método `queue.Queue().get()` en el módulo `queue`?",
+        "type": "multiple-choice",
+        "options": [
+            "Inserta un elemento en la cola.",
+            "Elimina y devuelve un elemento de la cola.",
+            "Devuelve el tamaño de la cola.",
+            "Cierra la cola."
+        ],
+        "answer": 1,
+        "explanation": "`get()` elimina y devuelve un elemento de la cola, bloqueando si es necesario hasta que haya uno disponible."
+    },
+    {
+        "question": "En programación de sockets, ¿qué es el 'loopback address'?",
+        "type": "multiple-choice",
+        "options": [
+            "Una dirección IP reservada para uso interno del host.",
+            "La dirección IP de difusión.",
+            "La dirección IP de la red local.",
+            "Una dirección IP pública."
+        ],
+        "answer": 0,
+        "explanation": "La dirección '127.0.0.1' es la dirección de loopback, utilizada para comunicaciones dentro del mismo host."
+    },
+    {
+        "question": "Completa: Para crear un objeto de evento en el módulo `multiprocessing`, se utiliza `multiprocessing.__________()`.",
+        "type": "fill-in-the-blank",
+        "answer": "Event",
+        "explanation": "`Event()` crea un objeto evento para sincronizar procesos."
+    },
+    {
+        "question": "¿Qué es un 'file descriptor' en programación de sistemas?",
+        "type": "multiple-choice",
+        "options": [
+            "Un puntero a un archivo en el sistema de archivos.",
+            "Un número entero que identifica un archivo abierto por un proceso.",
+            "Una descripción textual de un archivo.",
+            "Una estructura de datos que contiene el contenido del archivo."
+        ],
+        "answer": 1,
+        "explanation": "Un 'file descriptor' es un identificador (número entero) asociado a un archivo abierto."
     }
 ]
