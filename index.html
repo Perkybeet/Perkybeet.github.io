@@ -763,30 +763,64 @@
                     });
                     optionsDiv.appendChild(input);
                 } else if (q.type === 'code') {
-                    const pre = document.createElement('pre');
-                    pre.classList.add('code-block');
-                    const code = document.createElement('code');
-                    code.classList.add('language-kotlin');
-                    code.textContent = q.code || 'Escribe tu código aquí...';
-                    pre.appendChild(code);
-                    optionsDiv.appendChild(pre);
-
-                    const textarea = document.createElement('textarea');
-                    textarea.name = `question${index}`;
-                    textarea.rows = 5;
-                    textarea.placeholder = 'Escribe tu respuesta aquí...';
-                    textarea.addEventListener('input', () => {
-                        userAnswers[index] = textarea.value.trim();
-                        updateProgress();
-                        updateNavButton(index);
-                        if (mode === 'showAnswer') {
-                            displayCorrectAnswerCode(index);
-                            disableTextarea(index);
-                            clearInterval(timerInterval); // Detener el temporizador total
+                        // Mostrar el código de la pregunta, si existe
+                        if (q.code) {
+                            const pre = document.createElement('pre');
+                            pre.classList.add('code-block');
+                            const code = document.createElement('code');
+                            code.classList.add('language-kotlin');
+                            code.textContent = q.code;
+                            pre.appendChild(code);
+                            optionsDiv.appendChild(pre);
+                            hljs.highlightBlock(code);
                         }
-                    });
-                    optionsDiv.appendChild(textarea);
-                }
+
+                        if (q.options && q.options.length > 0) {
+                            // Si hay opciones, mostrar como opción múltiple
+                            q.options.forEach((option, i) => {
+                                const label = document.createElement('label');
+
+                                const input = document.createElement('input');
+                                input.type = 'radio';
+                                input.name = `question${index}`;
+                                input.value = i;
+                                input.addEventListener('change', () => {
+                                    userAnswers[index] = i;
+                                    updateProgress();
+                                    updateNavButton(index);
+                                    if (mode === 'showAnswer') {
+                                        displayCorrectAnswerCode(index);
+                                        disableOptions(index);
+                                        clearInterval(timerInterval); // Detener el temporizador total
+                                    }
+                                });
+
+                                const optionText = document.createElement('span');
+                                optionText.innerHTML = escapeHTML(option);
+
+                                label.appendChild(input);
+                                label.appendChild(optionText);
+                                optionsDiv.appendChild(label);
+                            });
+                        } else {
+                            // Si no hay opciones, mostrar textarea para ingresar código
+                            const textarea = document.createElement('textarea');
+                            textarea.name = `question${index}`;
+                            textarea.rows = 5;
+                            textarea.placeholder = 'Escribe tu respuesta aquí...';
+                            textarea.addEventListener('input', () => {
+                                userAnswers[index] = textarea.value.trim();
+                                updateProgress();
+                                updateNavButton(index);
+                                if (mode === 'showAnswer') {
+                                    displayCorrectAnswerCode(index);
+                                    disableTextarea(index);
+                                    clearInterval(timerInterval); // Detener el temporizador total
+                                }
+                            });
+                            optionsDiv.appendChild(textarea);
+                        }
+                    }
 
                 questionDiv.appendChild(optionsDiv);
                 quizForm.appendChild(questionDiv);
@@ -895,17 +929,36 @@
         // Mostrar respuesta correcta y explicación para preguntas de código
         function displayCorrectAnswerCode(index) {
             const question = selectedQuestions[index];
-            const correctAnswer = q.answer.trim(); // Error: 'q' no está definido
-            const userAnswer = userAnswers[index] ? userAnswers[index].trim() : '';
             const questionDiv = document.getElementById(`question${index}`);
-            const textarea = questionDiv.querySelector('.options textarea');
-            if (userAnswer === correctAnswer) {
-                textarea.style.border = '2px solid #28a745';
-                textarea.style.backgroundColor = '#d4edda';
+            const optionsDiv = questionDiv.querySelector('.options');
+
+            if (question.options && question.options.length > 0) {
+                // Pregunta de código con opciones
+                const correctOption = question.answer;
+                const options = optionsDiv.querySelectorAll('label');
+                options.forEach((label, i) => {
+                    if (i === correctOption) {
+                        label.style.borderLeft = '5px solid #28a745';
+                        label.style.backgroundColor = '#d4edda';
+                    } else if (i === userAnswers[index]) {
+                        label.style.borderLeft = '5px solid #dc3545';
+                        label.style.backgroundColor = '#f8d7da';
+                    }
+                });
             } else {
-                textarea.style.border = '2px solid #dc3545';
-                textarea.style.backgroundColor = '#f8d7da';
+                // Pregunta de código con entrada de texto
+                const correctAnswer = question.answer.trim();
+                const userAnswer = userAnswers[index] ? userAnswers[index].trim() : '';
+                const textarea = optionsDiv.querySelector('textarea');
+                if (userAnswer === correctAnswer) {
+                    textarea.style.border = '2px solid #28a745';
+                    textarea.style.backgroundColor = '#d4edda';
+                } else {
+                    textarea.style.border = '2px solid #dc3545';
+                    textarea.style.backgroundColor = '#f8d7da';
+                }
             }
+
             // Añadir explicación
             if (question.explanation) {
                 const explanationDiv = document.createElement('div');
@@ -965,8 +1018,16 @@
                         score++;
                     }
                 } else if (q.type === 'code') {
-                    if (answer && answer.trim() === q.answer.trim()) {
-                        score++;
+                    if (q.options && q.options.length > 0) {
+                        // Pregunta de código con opciones
+                        if (answer === q.answer) {
+                            score++;
+                        }
+                    } else {
+                        // Pregunta de código con entrada de texto
+                        if (answer && answer.trim() === q.answer.trim()) {
+                            score++;
+                        }
                     }
                 }
             });
@@ -1001,15 +1062,38 @@
                 // Crear la respuesta del usuario
                 const userResponse = document.createElement('p');
                 if (q.type === 'code') {
-                    const pre = document.createElement('pre');
-                    const code = document.createElement('code');
-                    code.classList.add('language-kotlin');
-                    code.textContent = userAnswer || 'No respondida';
-                    pre.appendChild(code);
-                    userResponse.innerHTML = `<strong>Tu respuesta:</strong>`;
-                    userResponse.appendChild(pre);
-                } else {
-                    userResponse.innerHTML = `<strong>Tu respuesta:</strong> ${escapeHTML(userAnswer || 'No respondida')}`;
+                    if (q.options && q.options.length > 0) {
+                        // Pregunta de código con opciones
+                        const userResponse = document.createElement('p');
+                        userResponse.innerHTML = `<strong>Tu respuesta:</strong> ${escapeHTML(q.options[userAnswer] || 'No respondida')}`;
+                        reviewQuestion.appendChild(userResponse);
+
+                        const correctResponse = document.createElement('p');
+                        correctResponse.innerHTML = `<strong>Respuesta correcta:</strong> ${escapeHTML(q.options[q.answer])}`;
+                        reviewQuestion.appendChild(correctResponse);
+                    } else {
+                        // Pregunta de código con entrada de texto
+                        // Código existente para mostrar el código ingresado y la respuesta correcta
+                        const userResponse = document.createElement('p');
+                        userResponse.innerHTML = `<strong>Tu respuesta:</strong>`;
+                        const preUser = document.createElement('pre');
+                        const codeUser = document.createElement('code');
+                        codeUser.classList.add('language-kotlin');
+                        codeUser.textContent = userAnswer || 'No respondida';
+                        preUser.appendChild(codeUser);
+                        userResponse.appendChild(preUser);
+                        reviewQuestion.appendChild(userResponse);
+
+                        const correctResponse = document.createElement('p');
+                        correctResponse.innerHTML = `<strong>Respuesta correcta:</strong>`;
+                        const preCorrect = document.createElement('pre');
+                        const codeCorrect = document.createElement('code');
+                        codeCorrect.classList.add('language-kotlin');
+                        codeCorrect.textContent = q.answer;
+                        preCorrect.appendChild(codeCorrect);
+                        correctResponse.appendChild(preCorrect);
+                        reviewQuestion.appendChild(correctResponse);
+                    }
                 }
                 reviewQuestion.appendChild(userResponse);
 
