@@ -25,31 +25,6 @@
         "explanation": "El programa ejecuta `echo Hola Mundo` y muestra la salida y el código de retorno del proceso."
     },
     {
-        "question": "¿Cuál de las siguientes opciones NO es una propiedad de un objeto `IPv4Address` en el módulo `ipaddress`?",
-        "type": "multiple-choice",
-        "options": [
-            "is_multicast",
-            "is_private",
-            "is_reserved",
-            "is_encrypted"
-        ],
-        "answer": 3,
-        "explanation": "La propiedad `is_encrypted` no existe para objetos `IPv4Address` en el módulo `ipaddress`."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para obtener la dirección IP del host local en Python, se utiliza la función `socket.gethostname()` seguida de `socket.gethostbyname(______)`.",
-        "type": "fill-in-the-blank",
-        "answer": "host",
-        "explanation": "Se utiliza `socket.gethostbyname(host)` para obtener la dirección IP del host local."
-    },
-    {
-        "question": "Crea un programa en Python que obtenga y muestre todas las direcciones IP asociadas al nombre de host local utilizando el módulo `socket`.",
-        "type": "code",
-        "answer": "import socket\n\ndirecciones = socket.getaddrinfo(socket.gethostname(), None)\nfor ip in direcciones:\n    print(ip[4][0])",
-        "validation": ["import socket", "socket.getaddrinfo", "print(ip[4][0])"],
-        "explanation": "El programa utiliza `socket.getaddrinfo` para obtener todas las direcciones IP asociadas al host local y las imprime."
-    },
-    {
         "question": "¿Cuál es el propósito del módulo `psutil` en Python?",
         "type": "multiple-choice",
         "options": [
@@ -60,131 +35,6 @@
         ],
         "answer": 0,
         "explanation": "El módulo `psutil` se utiliza para gestionar procesos y obtener información detallada del sistema."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para cerrar un socket en Python, se utiliza el método `______` del objeto socket.",
-        "type": "fill-in-the-blank",
-        "answer": "close",
-        "explanation": "El método `close()` se utiliza para cerrar un socket en Python."
-    },
-    {
-        "question": "Crea un programa en Python que inicie un servidor TCP que escuche en el puerto 2000 y responda con 'Hola Cliente' a cada conexión entrante.",
-        "type": "code",
-        "answer": "import socket\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 2000\n    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:\n        s.bind((HOST, PORT))\n        s.listen()\n        print(f'Servidor escuchando en {HOST}:{PORT}')\n        while True:\n            conn, addr = s.accept()\n            with conn:\n                print(f'Conexión desde {addr}')\n                conn.sendall(b'Hola Cliente')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import socket", "socket.socket", "s.bind", "s.listen", "s.accept", "conn.sendall"],
-        "explanation": "El programa crea un servidor TCP que escucha en el puerto 2000 y envía 'Hola Cliente' a cada cliente que se conecta."
-    },
-    {
-        "question": "¿Qué método del objeto `FTP` en el módulo `ftplib` se utiliza para subir un archivo al servidor FTP?",
-        "type": "multiple-choice",
-        "options": [
-            "retrlines",
-            "storbinary",
-            "sendcmd",
-            "quit"
-        ],
-        "answer": 1,
-        "explanation": "El método `storbinary` se utiliza para subir archivos en modo binario al servidor FTP."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para firmar un mensaje con DSA en Python, se utiliza la clase `DSS` del módulo `Crypto.Signature`, específicamente el método `____`.",
-        "type": "fill-in-the-blank",
-        "answer": "sign",
-        "explanation": "El método `sign` de la clase `DSS` se utiliza para firmar mensajes con DSA."
-    },
-    {
-        "question": "Crea un programa en Python que genere una clave RSA de 2048 bits, exporte la clave pública y la imprima.",
-        "type": "code",
-        "answer": "from Crypto.PublicKey import RSA\n\n# Generar clave RSA\nkey = RSA.generate(2048)\n\n# Exportar clave pública\npublic_key = key.publickey().export_key()\n\n# Imprimir clave pública\nprint(public_key.decode())",
-        "validation": ["from Crypto.PublicKey import RSA", "RSA.generate", "key.publickey().export_key", "print(public_key)"],
-        "explanation": "El programa genera una clave RSA de 2048 bits, exporta la clave pública y la imprime en formato legible."
-    },
-    {
-        "question": "¿Cuál es la función del método `socket.listen()` en Python?",
-        "type": "multiple-choice",
-        "options": [
-            "Enviar datos a un cliente",
-            "Aceptar conexiones entrantes",
-            "Escuchar conexiones entrantes",
-            "Cerrar la conexión"
-        ],
-        "answer": 2,
-        "explanation": "El método `socket.listen()` pone el socket en modo de escucha para aceptar conexiones entrantes."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para enviar un correo electrónico utilizando SMTP, se utiliza el módulo `smtplib` y la clase `MIMEMultipart` del módulo `______`.",
-        "type": "fill-in-the-blank",
-        "answer": "email.mime.multipart",
-        "explanation": "La clase `MIMEMultipart` se encuentra en el módulo `email.mime.multipart`."
-    },
-    {
-        "question": "Crea un programa en Python que envíe un correo electrónico simple desde una cuenta de Gmail a otra utilizando el módulo `smtplib`.",
-        "type": "code",
-        "answer": "import smtplib\nfrom email.mime.text import MIMEText\n\n# Configuración del correo\nenviado_por = 'tu_correo@gmail.com'\npassword = 'tu_contraseña'\npara = 'destinatario@gmail.com'\n\n# Crear el mensaje\nmensaje = MIMEText('Hola, este es un correo de prueba enviado desde Python.')\nmensaje['Subject'] = 'Prueba de SMTP'\nmensaje['From'] = enviado_por\nmensaje['To'] = para\n\n# Enviar el correo\ntry:\n    with smtplib.SMTP('smtp.gmail.com', 587) as server:\n        server.starttls()\n        server.login(enviado_por, password)\n        server.send_message(mensaje)\n    print('Correo enviado exitosamente')\nexcept Exception as e:\n    print(f'Error al enviar el correo: {e}')",
-        "validation": ["import smtplib", "from email.mime.text import MIMEText", "smtplib.SMTP", "server.login", "server.send_message"],
-        "explanation": "El programa configura el correo electrónico, crea un mensaje MIME y lo envía utilizando el servidor SMTP de Gmail."
-    },
-    {
-        "question": "¿Qué método del objeto `socket` en Python se utiliza para establecer una conexión con un servidor?",
-        "type": "multiple-choice",
-        "options": [
-            "connect",
-            "bind",
-            "listen",
-            "accept"
-        ],
-        "answer": 0,
-        "explanation": "El método `connect` se utiliza para establecer una conexión con un servidor."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para crear un socket UDP en Python, se utiliza `socket.socket(socket.AF_INET, socket.SOCK_DGRAM)` y luego se llama al método `______` para enviar datos.",
-        "type": "fill-in-the-blank",
-        "answer": "sendto",
-        "explanation": "El método `sendto` se utiliza para enviar datos a través de un socket UDP."
-    },
-    {
-        "question": "Crea un programa en Python que inicie un cliente UDP que envíe el mensaje 'Hola UDP' al servidor en `localhost` puerto `2000` y reciba la respuesta.",
-        "type": "code",
-        "answer": "import socket\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 2000\n    mensaje = b'Hola UDP'\n    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:\n        s.sendto(mensaje, (HOST, PORT))\n        datos, servidor = s.recvfrom(1024)\n        print(f'Recibido del servidor: {datos.decode()}')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import socket", "socket.socket", "s.sendto", "s.recvfrom"],
-        "explanation": "El programa crea un cliente UDP que envía 'Hola UDP' al servidor y espera una respuesta, que luego imprime."
-    },
-    {
-        "question": "¿Qué clase del módulo `socketserver` en Python permite manejar solicitudes de clientes de manera concurrente utilizando hilos?",
-        "type": "multiple-choice",
-        "options": [
-            "TCPServer",
-            "ThreadingTCPServer",
-            "UDPServer",
-            "ForkingTCPServer"
-        ],
-        "answer": 1,
-        "explanation": "La clase `ThreadingTCPServer` permite manejar solicitudes de clientes de manera concurrente utilizando hilos."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para recibir datos desde un socket en Python, se utiliza el método `____()` del objeto socket.",
-        "type": "fill-in-the-blank",
-        "answer": "recv",
-        "explanation": "El método `recv()` se utiliza para recibir datos desde un socket."
-    },
-    {
-        "question": "Crea un programa en Python que inicie un servidor UDP que escuche en el puerto 2000 y responda con 'Recibido' a cada mensaje entrante.",
-        "type": "code",
-        "answer": "import socket\n\ndef main():\n    HOST = ''\n    PORT = 2000\n    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:\n        s.bind((HOST, PORT))\n        print(f'Servidor UDP escuchando en puerto {PORT}')\n        while True:\n            datos, addr = s.recvfrom(1024)\n            print(f'Recibido de {addr}: {datos.decode()}')\n            s.sendto(b'Recibido', addr)\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import socket", "socket.socket", "s.bind", "s.recvfrom", "s.sendto"],
-        "explanation": "El programa crea un servidor UDP que escucha en el puerto 2000 y responde con 'Recibido' a cada mensaje entrante."
-    },
-    {
-        "question": "¿Cuál es la diferencia principal entre los modos `SOCK_STREAM` y `SOCK_DGRAM` al crear un socket en Python?",
-        "type": "multiple-choice",
-        "options": [
-            "`SOCK_STREAM` es para conexiones TCP y `SOCK_DGRAM` es para UDP",
-            "`SOCK_STREAM` es para IPv4 y `SOCK_DGRAM` es para IPv6",
-            "`SOCK_STREAM` es para conexiones seguras y `SOCK_DGRAM` no",
-            "No hay diferencia"
-        ],
-        "answer": 0,
-        "explanation": "`SOCK_STREAM` se utiliza para conexiones orientadas a flujo (TCP), mientras que `SOCK_DGRAM` es para datagramas (UDP)."
     },
     {
         "question": "Rellena el espacio en blanco: En el módulo `threading` de Python, la clase utilizada para crear hilos es `______`.",
@@ -220,7 +70,7 @@
     {
         "question": "Crea un programa en Python que liste todos los procesos activos en el sistema utilizando el módulo `psutil`.",
         "type": "code",
-        "answer": "import psutil\n\nfor proc in psutil.process_iter(['pid', 'name']):\n    try:\n        print(f'PID: {proc.info['pid']}, Nombre: {proc.info['name']}')\n    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):\n        pass",
+        "answer": "import psutil\n\nfor proc in psutil.process_iter(['pid', 'name']):\n    try:\n        print(f'PID: {proc.info[\"pid\"]}, Nombre: {proc.info[\"name\"]}')\n    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):\n        pass",
         "validation": ["import psutil", "psutil.process_iter", "proc.info"],
         "explanation": "El programa itera sobre todos los procesos activos y imprime su PID y nombre utilizando el módulo `psutil`."
     },
@@ -237,19 +87,6 @@
         "explanation": "El método `subprocess.Popen()` inicia un proceso y no espera a que termine, permitiendo la ejecución concurrente."
     },
     {
-        "question": "Rellena el espacio en blanco: En Python, para enviar un archivo a través de FTP utilizando `ftplib`, se utiliza el método `____` en modo binario.",
-        "type": "fill-in-the-blank",
-        "answer": "storbinary",
-        "explanation": "El método `storbinary` se utiliza para subir archivos en modo binario a un servidor FTP."
-    },
-    {
-        "question": "Crea un programa en Python que descargue un archivo desde un servidor FTP utilizando el método `retrbinary` del módulo `ftplib`.",
-        "type": "code",
-        "answer": "import ftplib\n\ndef download_file(ftp_host, ftp_user, ftp_pass, remote_file, local_file):\n    with ftplib.FTP(ftp_host, ftp_user, ftp_pass) as ftp:\n        with open(local_file, 'wb') as lf:\n            ftp.retrbinary(f'RETR {remote_file}', lf.write)\n        print(f'Archivo {remote_file} descargado como {local_file}')\n\nif __name__ == '__main__':\n    FTP_HOST = 'ftp.dlptest.com'\n    FTP_USER = 'dlpuser'\n    FTP_PASS = 'rNrKYTX9g7z3RgJRmxWuGHbeu'\n    remote_file = 'subido.txt'\n    local_file = 'descargado.txt'\n    download_file(FTP_HOST, FTP_USER, FTP_PASS, remote_file, local_file)",
-        "validation": ["import ftplib", "ftplib.FTP", "ftp.retrbinary", "lf.write"],
-        "explanation": "El programa se conecta a un servidor FTP, descarga un archivo especificado y lo guarda localmente utilizando `retrbinary`."
-    },
-    {
         "question": "¿Qué clase del módulo `multiprocessing` en Python permite compartir variables entre procesos utilizando un servidor?",
         "type": "multiple-choice",
         "options": [
@@ -260,106 +97,6 @@
         ],
         "answer": 2,
         "explanation": "La clase `Manager` permite compartir variables entre procesos utilizando un servidor."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para generar un vector de inicialización (IV) aleatorio para AES, se utiliza la función `os.urandom(_____)`.",
-        "type": "fill-in-the-blank",
-        "answer": "16",
-        "explanation": "Para AES, generalmente se utiliza un IV de 16 bytes, por lo que `os.urandom(16)` es adecuado."
-    },
-    {
-        "question": "Crea un programa en Python que encripte y luego desencripte un mensaje utilizando AES en modo EAX del módulo `Crypto.Cipher`.",
-        "type": "code",
-        "answer": "from Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\n# Mensaje original\nmensaje_original = b'Este es un mensaje secreto'\n\n# Generar clave y IV\nclave = get_random_bytes(16)  # Clave de 16 bytes para AES-128\n\n# Encriptar\ncipher = AES.new(clave, AES.MODE_EAX)\nnonce = cipher.nonce\nmensaje_cifrado, tag = cipher.encrypt_and_digest(mensaje_original)\n\nprint(f'Mensaje cifrado: {mensaje_cifrado}')\n\n# Desencriptar\ncipher_descifrado = AES.new(clave, AES.MODE_EAX, nonce=nonce)\nmensaje_descifrado = cipher_descifrado.decrypt(mensaje_cifrado)\n\n# Verificar integridad\ntry:\n    cipher_descifrado.verify(tag)\n    print(f'Mensaje desencriptado: {mensaje_descifrado.decode()}')\nexcept ValueError:\n    print('La clave o el mensaje están corruptos')",
-        "validation": ["from Crypto.Cipher import AES", "cipher.encrypt_and_digest", "cipher.decrypt", "cipher.verify"],
-        "explanation": "El programa encripta un mensaje utilizando AES en modo EAX y luego lo desencripta, verificando la integridad mediante el tag."
-    },
-    {
-        "question": "¿Qué método del objeto `RSA` en el módulo `Crypto.PublicKey` se utiliza para exportar una clave pública?",
-        "type": "multiple-choice",
-        "options": [
-            "export_key",
-            "public_export",
-            "get_public",
-            "generate_key"
-        ],
-        "answer": 0,
-        "explanation": "El método `export_key` se utiliza para exportar tanto claves públicas como privadas en el módulo `Crypto.PublicKey`."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para verificar la autenticidad de una firma DSA en Python, se utiliza el método `____` del objeto `DSS`.",
-        "type": "fill-in-the-blank",
-        "answer": "verify",
-        "explanation": "El método `verify` del objeto `DSS` se utiliza para verificar la autenticidad de una firma DSA."
-    },
-    {
-        "question": "Crea un programa en Python que genere un par de claves DSA, firme un mensaje y luego verifique la firma.",
-        "type": "code",
-        "answer": "from Crypto.PublicKey import DSA\nfrom Crypto.Signature import DSS\nfrom Crypto.Hash import SHA256\n\n# Generar claves DSA\nkey = DSA.generate(2048)\npublic_key = key.publickey()\n\n# Mensaje a firmar\nmensaje = b'Este es un mensaje para firmar'\nhash_obj = SHA256.new(mensaje)\n\n# Firmar el mensaje\nfirmador = DSS.new(key, 'fips-186-3')\nfirma = firmador.sign(hash_obj)\n\nprint(f'Firma: {firma.hex()}')\n\n# Verificar la firma\nverificador = DSS.new(public_key, 'fips-186-3')\ntry:\n    verificador.verify(hash_obj, firma)\n    print('La firma es válida')\nexcept ValueError:\n    print('La firma no es válida')",
-        "validation": ["from Crypto.PublicKey import DSA", "DSS.new", "firmador.sign", "verificador.verify"],
-        "explanation": "El programa genera claves DSA, firma un mensaje y verifica la firma utilizando los módulos correspondientes."
-    },
-    {
-        "question": "¿Qué método del objeto `AES` en el módulo `Crypto.Cipher` se utiliza para encriptar datos en modo CFB?",
-        "type": "multiple-choice",
-        "options": [
-            "encrypt",
-            "encrypt_and_digest",
-            "encrypt_block",
-            "CFB_encrypt"
-        ],
-        "answer": 0,
-        "explanation": "El método `encrypt` se utiliza para encriptar datos en modo CFB."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para crear un servidor SSL en Python, se utiliza el método `______` del objeto `SSLContext` para cargar el certificado y la clave privada.",
-        "type": "fill-in-the-blank",
-        "answer": "load_cert_chain",
-        "explanation": "El método `load_cert_chain` del objeto `SSLContext` se utiliza para cargar el certificado y la clave privada."
-    },
-    {
-        "question": "Crea un programa en Python que inicie un servidor SSL que escuche en el puerto 4444 y envíe el mensaje 'Conexión segura establecida' a cada cliente que se conecte.",
-        "type": "code",
-        "answer": "import socket\nimport ssl\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 4444\n    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)\n    context.load_cert_chain('certificado.pem', 'clave_privada.key')\n    \n    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:\n        sock.bind((HOST, PORT))\n        sock.listen(5)\n        print(f'Servidor SSL escuchando en {HOST}:{PORT}')\n        with context.wrap_socket(sock, server_side=True) as ssock:\n            while True:\n                conn, addr = ssock.accept()\n                with conn:\n                    print(f'Conexión segura desde {addr}')\n                    conn.sendall(b'Conexión segura establecida')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import ssl", "ssl.SSLContext", "context.load_cert_chain", "context.wrap_socket"],
-        "explanation": "El programa configura un servidor SSL que utiliza un certificado y una clave privada para establecer conexiones seguras y envía un mensaje a cada cliente."
-    },
-    {
-        "question": "¿Qué método del objeto `RSA` en el módulo `Crypto.PublicKey` se utiliza para importar una clave privada desde un archivo?",
-        "type": "multiple-choice",
-        "options": [
-            "import_key",
-            "load_key",
-            "read_key",
-            "decode_key"
-        ],
-        "answer": 0,
-        "explanation": "El método `import_key` se utiliza para importar una clave privada desde un archivo."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para iniciar un servidor HTTP simple que sirva archivos del directorio actual, se puede utilizar el módulo `http.server` con la clase `______`.",
-        "type": "fill-in-the-blank",
-        "answer": "SimpleHTTPRequestHandler",
-        "explanation": "La clase `SimpleHTTPRequestHandler` del módulo `http.server` permite crear un servidor HTTP simple."
-    },
-    {
-        "question": "Crea un programa en Python que inicie un servidor HTTP en el puerto 8000 que sirva archivos del directorio actual.",
-        "type": "code",
-        "answer": "import http.server\nimport socketserver\n\nPORT = 8000\nHandler = http.server.SimpleHTTPRequestHandler\n\nwith socketserver.TCPServer(('', PORT), Handler) as httpd:\n    print(f'Servidor HTTP corriendo en el puerto {PORT}')\n    httpd.serve_forever()",
-        "validation": ["import http.server", "socketserver.TCPServer", "httpd.serve_forever"],
-        "explanation": "El programa crea un servidor HTTP que escucha en el puerto 8000 y sirve archivos del directorio actual utilizando `SimpleHTTPRequestHandler`."
-    },
-    {
-        "question": "¿Qué función del módulo `asyncio` en Python se utiliza para ejecutar una función asincrónica hasta su finalización?",
-        "type": "multiple-choice",
-        "options": [
-            "run_until_complete",
-            "start",
-            "execute",
-            "run"
-        ],
-        "answer": 3,
-        "explanation": "La función `asyncio.run` se utiliza para ejecutar una función asincrónica hasta su finalización."
     },
     {
         "question": "Rellena el espacio en blanco: En Python, para iniciar un hilo como daemon, se establece el atributo `______` a `True` antes de iniciar el hilo.",
@@ -410,12 +147,6 @@
         ],
         "answer": 1,
         "explanation": "El método `join` se utiliza para esperar a que un hilo termine su ejecución."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para generar un número aleatorio en el rango de 1 a 10, se utiliza `random.______(1, 10)` del módulo `random`.",
-        "type": "fill-in-the-blank",
-        "answer": "randrange",
-        "explanation": "La función `random.randrange(1, 10)` genera un número aleatorio en el rango especificado."
     },
     {
         "question": "Crea un programa en Python que utilice un semáforo (`Semaphore`) para limitar el número de hilos que pueden acceder a una sección crítica a 3.",
@@ -475,107 +206,45 @@
         "explanation": "El programa utiliza un bloqueo para asegurar que solo un hilo a la vez pueda incrementar la variable `contador`, evitando condiciones de carrera."
     },
     {
-        "question": "¿Qué método del objeto `RSA` en el módulo `Crypto.PublicKey` se utiliza para exportar una clave privada con protección mediante una frase de contraseña?",
-        "type": "multiple-choice",
-        "options": [
-            "export_key",
-            "export_protected",
-            "export_with_password",
-            "encrypt_key"
-        ],
-        "answer": 0,
-        "explanation": "El método `export_key` se utiliza para exportar una clave privada con opciones de protección, incluyendo una frase de contraseña."
-    },
-    {
-        "question": "Rellena el espacio en blanco: Para importar una clave pública desde un archivo en Python utilizando `Crypto.PublicKey.RSA`, se utiliza la función `RSA.import_key(______)`.",
+        "question": "Rellena el espacio en blanco: En Python, para crear una barrera (`Barrier`) que sincronice a 5 hilos, se utiliza `threading.Barrier(_____)`.",
         "type": "fill-in-the-blank",
-        "answer": "open('public_key.pem').read()",
-        "explanation": "Se utiliza `RSA.import_key` pasando el contenido leído del archivo que contiene la clave pública."
+        "answer": "5",
+        "explanation": "Se utiliza `threading.Barrier(5)` para crear una barrera que sincroniza a 5 hilos."
     },
     {
-        "question": "Crea un programa en Python que genere un par de claves RSA, exporte la clave pública a un archivo `publica.pem` y la clave privada a un archivo `privada.pem`.",
+        "question": "Crea un programa en Python que inicie 5 hilos que esperen en una barrera y, una vez que todos lleguen, impriman 'Todos los hilos han llegado a la barrera'.",
         "type": "code",
-        "answer": "from Crypto.PublicKey import RSA\n\ndef generar_claves():\n    key = RSA.generate(2048)\n    private_key = key.export_key()\n    public_key = key.publickey().export_key()\n    \n    with open('privada.pem', 'wb') as f:\n        f.write(private_key)\n    with open('publica.pem', 'wb') as f:\n        f.write(public_key)\n    \n    print('Claves RSA generadas y guardadas en privada.pem y publica.pem')\n\nif __name__ == '__main__':\n    generar_claves()",
-        "validation": ["from Crypto.PublicKey import RSA", "RSA.generate", "key.export_key", "key.publickey().export_key", "f.write"],
-        "explanation": "El programa genera un par de claves RSA y las guarda en archivos separados para la clave pública y privada."
+        "answer": "import threading\nimport time\nimport random\n\ndef tarea(barrier, id):\n    time.sleep(random.uniform(0.1, 2.0))\n    print(f'Hilo {id} llegó a la barrera')\n    barrier.wait()\n    print(f'Todos los hilos han llegado a la barrera. Hilo {id} continúa')\n\nif __name__ == '__main__':\n    barrier = threading.Barrier(5)\n    hilos = [threading.Thread(target=tarea, args=(barrier, i)) for i in range(1, 6)]\n    for t in hilos:\n        t.start()\n    for t in hilos:\n        t.join()",
+        "validation": ["import threading", "threading.Barrier", "barrier.wait"],
+        "explanation": "El programa crea 5 hilos que esperan en una barrera y continúan una vez que todos han llegado, imprimiendo mensajes antes y después de la sincronización."
     },
     {
-        "question": "¿Cuál es la diferencia principal entre los modos `AES.MODE_EAX` y `AES.MODE_CFB` en el módulo `Crypto.Cipher`?",
+        "question": "¿Qué método del objeto `Semaphore` en Python se utiliza para liberar un permiso, incrementando el contador del semáforo?",
         "type": "multiple-choice",
         "options": [
-            "EAX proporciona autenticación mientras que CFB no",
-            "CFB proporciona autenticación mientras que EAX no",
-            "EAX es para encriptación y CFB es para desencriptación",
-            "No hay diferencia"
-        ],
-        "answer": 0,
-        "explanation": "El modo `AES.MODE_EAX` proporciona autenticación además de encriptación, mientras que `AES.MODE_CFB` solo proporciona encriptación."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para ajustar la paridad de una clave DES3, se utiliza la función `DES3.adjust_key_parity(_____)` del módulo `Crypto.Cipher`.",
-        "type": "fill-in-the-blank",
-        "answer": "key",
-        "explanation": "La función `DES3.adjust_key_parity(key)` ajusta la paridad de la clave DES3 proporcionada."
-    },
-    {
-        "question": "Crea un programa en Python que encripte un archivo `original.txt` y lo guarde como `encriptado.txt` utilizando DES3 en modo EAX.",
-        "type": "code",
-        "answer": "from Crypto.Cipher import DES3\nfrom Crypto.Random import get_random_bytes\nimport os\n\ndef encriptar_archivo(file_origen, file_destino, key):\n    cipher = DES3.new(key, DES3.MODE_EAX)\n    with open(file_origen, 'rb') as f:\n        data = f.read()\n    ciphertext, tag = cipher.encrypt_and_digest(data)\n    with open(file_destino, 'wb') as f:\n        [f.write(x) for x in (cipher.nonce, tag, ciphertext)]\n    print(f'Archivo {file_origen} encriptado como {file_destino}')\n\ndef main():\n    key = DES3.adjust_key_parity(get_random_bytes(24))\n    file_origen = 'original.txt'\n    file_destino = 'encriptado.txt'\n    encriptar_archivo(file_origen, file_destino, key)\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["from Crypto.Cipher import DES3", "DES3.new", "cipher.encrypt_and_digest", "f.write"],
-        "explanation": "El programa encripta un archivo utilizando DES3 en modo EAX y guarda el resultado en un nuevo archivo."
-    },
-    {
-        "question": "¿Qué método del objeto `DSS` en el módulo `Crypto.Signature` se utiliza para firmar un objeto `Hash`?",
-        "type": "multiple-choice",
-        "options": [
-            "sign",
-            "verify",
-            "encrypt",
-            "decrypt"
-        ],
-        "answer": 0,
-        "explanation": "El método `sign` se utiliza para firmar un objeto `Hash` con una clave privada."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para crear un servidor TCP multihilo utilizando `socketserver`, se utiliza la clase `______` como mixin.",
-        "type": "fill-in-the-blank",
-        "answer": "ThreadingMixIn",
-        "explanation": "La clase `ThreadingMixIn` se utiliza como mixin para crear servidores multihilo con `socketserver`."
-    },
-    {
-        "question": "Crea un programa en Python que inicie un servidor TCP multihilo que reciba mensajes de los clientes y responda con 'Mensaje recibido'. Utiliza `socketserver` y `ThreadingMixIn`.",
-        "type": "code",
-        "answer": "import socketserver\n\nclass ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):\n    def handle(self):\n        data = self.request.recv(1024).strip()\n        print(f'Recibido de {self.client_address[0]}: {data.decode()}')\n        self.request.sendall(b'Mensaje recibido')\n\nclass ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):\n    pass\n\nif __name__ == '__main__':\n    HOST, PORT = '0.0.0.0', 2000\n    with ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler) as server:\n        print(f'Servidor multihilo corriendo en {HOST}:{PORT}')\n        server.serve_forever()",
-        "validation": ["import socketserver", "socketserver.ThreadingMixIn", "server.serve_forever"],
-        "explanation": "El programa crea un servidor TCP multihilo que maneja cada conexión en un hilo separado y responde con 'Mensaje recibido'."
-    },
-    {
-        "question": "¿Cuál es la función del método `socket.recvfrom()` en Python?",
-        "type": "multiple-choice",
-        "options": [
-            "Recibir datos en un socket TCP",
-            "Recibir datos en un socket UDP junto con la dirección del remitente",
-            "Enviar datos a un socket UDP",
-            "Enviar datos a un socket TCP"
+            "acquire",
+            "release",
+            "wait",
+            "notify"
         ],
         "answer": 1,
-        "explanation": "`socket.recvfrom()` se utiliza para recibir datos en un socket UDP junto con la dirección del remitente."
+        "explanation": "El método `release` se utiliza para liberar un permiso en un semáforo, incrementando su contador."
     },
     {
-        "question": "Rellena el espacio en blanco: En Python, para crear una instancia de `RSA` en el módulo `Crypto.PublicKey`, se utiliza `RSA._____(2048)`.",
+        "question": "Rellena el espacio en blanco: En Python, para detener un hilo que está esperando en una condición (`Condition`), se puede utilizar el método `____` para notificar a todos los hilos que esperaban.",
         "type": "fill-in-the-blank",
-        "answer": "generate",
-        "explanation": "La función `RSA.generate(2048)` se utiliza para generar una clave RSA de 2048 bits."
+        "answer": "notify_all",
+        "explanation": "El método `notify_all` se utiliza para notificar a todos los hilos que están esperando en una condición."
     },
     {
-        "question": "Crea un programa en Python que implemente un productor-consumidor utilizando una cola (`Queue`) donde el productor añade números del 1 al 10 y el consumidor los imprime.",
+        "question": "Crea un programa en Python que utilice una condición (`Condition`) para que un hilo espere hasta que otro hilo cambie el valor de una variable compartida.",
         "type": "code",
-        "answer": "import threading\nimport queue\nimport time\n\ndef productor(q):\n    for i in range(1, 11):\n        q.put(i)\n        print(f'Productor añadió: {i}')\n        time.sleep(0.5)\n    q.put(None)  # Señal para el consumidor\n\ndef consumidor(q):\n    while True:\n        item = q.get()\n        if item is None:\n            break\n        print(f'Consumidor procesó: {item}')\n        q.task_done()\n\nq = queue.Queue()\n\nt_prod = threading.Thread(target=productor, args=(q,))\nt_cons = threading.Thread(target=consumidor, args=(q,))\n\nt_prod.start()\nt_cons.start()\n\nt_prod.join()\nq.join()\n",
-        "validation": ["import queue", "threading.Thread", "q.put", "q.get"],
-        "explanation": "El programa implementa un productor que añade números a una cola y un consumidor que los procesa, utilizando hilos para la concurrencia."
+        "answer": "import threading\nimport time\n\ndef esperar(cond, data):\n    with cond:\n        cond.wait()\n        print(f'Variable actualizada: {data['valor']}')\n\ndef actualizar(cond, data):\n    with cond:\n        time.sleep(2)\n        data['valor'] = 10\n        print('Variable actualizada por el hilo de actualización')\n        cond.notify()\n\ncond = threading.Condition()\ndata = {'valor': 0}\n\nt1 = threading.Thread(target=esperar, args=(cond, data))\nt2 = threading.Thread(target=actualizar, args=(cond, data))\n\nt1.start()\nt2.start()\n\nt1.join()\nt2.join()",
+        "validation": ["import threading", "threading.Condition", "cond.wait", "cond.notify"],
+        "explanation": "El programa sincroniza dos hilos utilizando una condición: uno espera a que la variable `data['valor']` sea actualizada por otro hilo."
     },
     {
-        "question": "¿Qué método del objeto `Event` en el módulo `threading` en Python se utiliza para bloquear hasta que el evento sea establecido?",
+        "question": "¿Qué método del objeto `threading.Event` en Python se utiliza para bloquear hasta que el evento sea establecido?",
         "type": "multiple-choice",
         "options": [
             "set",
@@ -585,6 +254,38 @@
         ],
         "answer": 2,
         "explanation": "El método `wait` bloquea el hilo hasta que el evento sea establecido mediante `set`."
+    },
+    {
+        "question": "Crea un programa en Python que inicie un hilo que imprima 'Temporizador activado' después de 3 segundos utilizando `threading.Timer`.",
+        "type": "code",
+        "answer": "import threading\nimport time\n\ndef temporizador():\n    print('Temporizador activado')\n\nt = threading.Timer(3, temporizador)\nt.start()\n\n# Opcional: Esperar para asegurar que el programa no termine antes de que el temporizador se active\nt.join()",
+        "validation": ["import threading", "threading.Timer", "t.start", "t.join"],
+        "explanation": "El programa crea un temporizador que ejecuta la función `temporizador` después de 3 segundos."
+    },
+    {
+        "question": "¿Qué clase del módulo `threading` en Python se utiliza para crear hilos que pueden ser detenidos desde el exterior?",
+        "type": "multiple-choice",
+        "options": [
+            "Thread",
+            "Timer",
+            "Event",
+            "None de las anteriores"
+        ],
+        "answer": 3,
+        "explanation": "Ninguna de las clases mencionadas permite detener un hilo desde el exterior de forma segura. En Python, los hilos deben gestionarse de manera cooperativa para detenerse."
+    },
+    {
+        "question": "Rellena el espacio en blanco: En Python, la clase `Lock` del módulo `threading` se utiliza para asegurar que solo un hilo pueda ejecutar una sección crítica a la vez. El método para adquirir el bloqueo es `____()`.",
+        "type": "fill-in-the-blank",
+        "answer": "acquire",
+        "explanation": "El método `acquire()` se utiliza para adquirir el bloqueo en una instancia de `Lock`."
+    },
+    {
+        "question": "Crea un programa en Python que utilice un bloqueo (`Lock`) para proteger una variable compartida entre múltiples hilos que la incrementan.",
+        "type": "code",
+        "answer": "import threading\n\ncontador = 0\nlock = threading.Lock()\n\ndef incrementar():\n    global contador\n    for _ in range(100000):\n        with lock:\n            contador += 1\n\nhilos = [threading.Thread(target=incrementar) for _ in range(10)]\n\nfor t in hilos:\n    t.start()\n\nfor t in hilos:\n    t.join()\n\nprint(f'Valor final del contador: {contador}')",
+        "validation": ["import threading", "threading.Lock", "with lock:", "t.start", "t.join"],
+        "explanation": "El programa utiliza un bloqueo para asegurar que solo un hilo a la vez pueda incrementar la variable `contador`, evitando condiciones de carrera."
     },
     {
         "question": "Rellena el espacio en blanco: En Python, para crear una barrera (`Barrier`) que sincronice a 5 hilos, se utiliza `threading.Barrier(_____)`.",
@@ -625,207 +326,37 @@
         "explanation": "El programa sincroniza dos hilos utilizando una condición: uno espera a que la variable `data['valor']` sea actualizada por otro hilo."
     },
     {
-        "question": "¿Qué método del objeto `DES3` en el módulo `Crypto.Cipher` se utiliza para ajustar la paridad de una clave?",
+        "question": "¿Qué método del objeto `threading.Event` en Python se utiliza para bloquear hasta que el evento sea establecido?",
         "type": "multiple-choice",
         "options": [
-            "adjust_key_parity",
-            "set_key_parity",
-            "fix_parity",
-            "normalize_key"
-        ],
-        "answer": 0,
-        "explanation": "El método `adjust_key_parity` se utiliza para ajustar la paridad de una clave DES3."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para verificar si una red IPv4 es una subred de otra, se utiliza el método `______` del objeto `IPv4Network`.",
-        "type": "fill-in-the-blank",
-        "answer": "subnet_of",
-        "explanation": "El método `subnet_of` del objeto `IPv4Network` se utiliza para verificar si una red es una subred de otra."
-    },
-    {
-        "question": "Crea un programa en Python que verifique si la red '192.168.1.0/24' es una subred de '192.168.0.0/16' utilizando el módulo `ipaddress`.",
-        "type": "code",
-        "answer": "import ipaddress\n\nnetwork1 = ipaddress.IPv4Network('192.168.1.0/24')\nnetwork2 = ipaddress.IPv4Network('192.168.0.0/16')\n\nif network1.subnet_of(network2):\n    print(f'{network1} es una subred de {network2}')\nelse:\n    print(f'{network1} NO es una subred de {network2}')",
-        "validation": ["import ipaddress", "IPv4Network", "subnet_of"],
-        "explanation": "El programa utiliza el método `subnet_of` para verificar si una red es subred de otra."
-    },
-    {
-        "question": "¿Qué método del objeto `AES` en el módulo `Crypto.Cipher` se utiliza para desencriptar datos en modo EAX?",
-        "type": "multiple-choice",
-        "options": [
-            "decrypt",
-            "decrypt_and_verify",
-            "CFB_decrypt",
-            "EAX_decrypt"
-        ],
-        "answer": 1,
-        "explanation": "El método `decrypt_and_verify` se utiliza para desencriptar datos en modo EAX y verificar la integridad del mensaje."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para importar una clave DSA desde un archivo, se utiliza la función `DSA.import_key(______)` del módulo `Crypto.PublicKey`.",
-        "type": "fill-in-the-blank",
-        "answer": "open('public_key.pem').read()",
-        "explanation": "Se utiliza `DSA.import_key` pasando el contenido leído del archivo que contiene la clave DSA."
-    },
-    {
-        "question": "Crea un programa en Python que firme un mensaje con una clave DSA privada y luego verifique la firma con la clave pública correspondiente.",
-        "type": "code",
-        "answer": "from Crypto.PublicKey import DSA\nfrom Crypto.Signature import DSS\nfrom Crypto.Hash import SHA256\n\n# Generar claves DSA\nkey = DSA.generate(2048)\npublic_key = key.publickey()\n\n# Mensaje a firmar\nmensaje = b'Este es un mensaje seguro'\nhash_obj = SHA256.new(mensaje)\n\n# Firmar el mensaje\nfirmador = DSS.new(key, 'fips-186-3')\nfirma = firmador.sign(hash_obj)\n\nprint(f'Firma: {firma.hex()}')\n\n# Verificar la firma\nverificador = DSS.new(public_key, 'fips-186-3')\ntry:\n    verificador.verify(hash_obj, firma)\n    print('La firma es válida')\nexcept ValueError:\n    print('La firma no es válida')",
-        "validation": ["from Crypto.PublicKey import DSA", "DSS.new", "firmador.sign", "verificador.verify"],
-        "explanation": "El programa genera claves DSA, firma un mensaje y verifica la firma utilizando las claves generadas."
-    },
-    {
-        "question": "¿Qué función del módulo `urllib.request` en Python se utiliza para abrir una URL y leer su contenido?",
-        "type": "multiple-choice",
-        "options": [
-            "urlopen",
-            "open_url",
-            "fetch",
-            "read_url"
-        ],
-        "answer": 0,
-        "explanation": "La función `urlopen` se utiliza para abrir una URL y leer su contenido."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para cargar y parsear una respuesta JSON, se utiliza la función `json._____(_____)`.",
-        "type": "fill-in-the-blank",
-        "answer": "loads, response",
-        "explanation": "La función `json.loads(response)` se utiliza para parsear una cadena JSON en Python."
-    },
-    {
-        "question": "Crea un programa en Python que realice una solicitud HTTP GET a 'http://www.python.org' y muestre los primeros 5 encabezados de la respuesta.",
-        "type": "code",
-        "answer": "from urllib import request\n\ndef main():\n    response = request.urlopen('http://www.python.org')\n    headers = response.info()\n    print('Primeros 5 encabezados:')\n    for i, (k, v) in enumerate(headers.items()):\n        if i >= 5:\n            break\n        print(f'{k}: {v}')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["from urllib import request", "request.urlopen", "response.info"],
-        "explanation": "El programa realiza una solicitud HTTP GET a 'http://www.python.org' y muestra los primeros 5 encabezados de la respuesta."
-    },
-    {
-        "question": "¿Qué método del objeto `DES` en el módulo `Crypto.Cipher` se utiliza para encriptar datos en modo OFB?",
-        "type": "multiple-choice",
-        "options": [
-            "encrypt",
-            "encrypt_and_digest",
-            "encrypt_block",
-            "OFB_encrypt"
-        ],
-        "answer": 0,
-        "explanation": "El método `encrypt` se utiliza para encriptar datos en modo OFB."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para crear una clave AES de 16 bytes, se utiliza `AES.new(______, AES.MODE_EAX)`.",
-        "type": "fill-in-the-blank",
-        "answer": "clave",
-        "explanation": "Se debe pasar la clave de 16 bytes como primer argumento a `AES.new`."
-    },
-    {
-        "question": "Crea un programa en Python que encripte y luego desencripte un mensaje utilizando DES en modo OFB. Asegúrate de manejar el IV correctamente.",
-        "type": "code",
-        "answer": "from Crypto.Cipher import DES\nfrom Crypto.Random import get_random_bytes\n\ndef encriptar(mensaje, clave):\n    cipher = DES.new(clave, DES.MODE_OFB)\n    iv = cipher.iv\n    ciphertext = cipher.encrypt(mensaje.encode('utf-8'))\n    return iv, ciphertext\n\ndef desencriptar(iv, ciphertext, clave):\n    cipher = DES.new(clave, DES.MODE_OFB, iv=iv)\n    mensaje = cipher.decrypt(ciphertext).decode('utf-8')\n    return mensaje\n\nif __name__ == '__main__':\n    clave = b'abcdefgh'  # Clave de 8 bytes para DES\n    mensaje = 'Mensaje secreto'\n    \n    iv, ciphertext = encriptar(mensaje, clave)\n    print(f'IV: {iv}')\n    print(f'Ciphertext: {ciphertext}')\n    \n    mensaje_descifrado = desencriptar(iv, ciphertext, clave)\n    print(f'Mensaje desencriptado: {mensaje_descifrado}')",
-        "validation": ["from Crypto.Cipher import DES", "DES.new", "cipher.encrypt", "cipher.decrypt"],
-        "explanation": "El programa encripta un mensaje utilizando DES en modo OFB y luego lo desencripta utilizando el IV generado."
-    },
-    {
-        "question": "¿Qué método del objeto `socket` en Python se utiliza para cerrar la conexión de un socket cliente después de terminar la comunicación?",
-        "type": "multiple-choice",
-        "options": [
-            "disconnect",
-            "close",
-            "shutdown",
-            "terminate"
-        ],
-        "answer": 1,
-        "explanation": "El método `close` se utiliza para cerrar la conexión de un socket en Python."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para iniciar un servidor HTTP que soporte HTTPS, se puede utilizar la clase `HTTPServer` del módulo `http.server` junto con `______` del módulo `ssl`.",
-        "type": "fill-in-the-blank",
-        "answer": "ssl.wrap_socket",
-        "explanation": "Se puede utilizar `ssl.wrap_socket` para envolver el socket del servidor HTTP y soportar HTTPS."
-    },
-    {
-        "question": "Crea un programa en Python que inicie un servidor HTTP seguro (HTTPS) en el puerto 8443 utilizando un certificado SSL.",
-        "type": "code",
-        "answer": "import http.server\nimport ssl\n\ndef main():\n    PORT = 8443\n    Handler = http.server.SimpleHTTPRequestHandler\n    httpd = http.server.HTTPServer(('0.0.0.0', PORT), Handler)\n    httpd.socket = ssl.wrap_socket(httpd.socket,\n                                   server_side=True,\n                                   certfile='certificado.pem',\n                                   keyfile='clave_privada.key',\n                                   ssl_version=ssl.PROTOCOL_TLS)\n    print(f'Servidor HTTPS corriendo en el puerto {PORT}')\n    httpd.serve_forever()\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import ssl", "ssl.wrap_socket", "certfile", "keyfile"],
-        "explanation": "El programa configura un servidor HTTP seguro utilizando SSL, escuchando en el puerto 8443 y utilizando los archivos de certificado y clave proporcionados."
-    },
-    {
-        "question": "¿Qué método del objeto `DSA` en el módulo `Crypto.PublicKey` se utiliza para exportar una clave pública?",
-        "type": "multiple-choice",
-        "options": [
-            "export_key",
-            "export_public",
-            "get_public_key",
-            "save_public"
-        ],
-        "answer": 0,
-        "explanation": "El método `export_key` se utiliza para exportar tanto claves públicas como privadas en el módulo `Crypto.PublicKey`."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para conectar un cliente TCP a un servidor en `localhost` puerto `2000`, se utiliza `s.connect((______, ______))`.",
-        "type": "fill-in-the-blank",
-        "answer": "'127.0.0.1', 2000",
-        "explanation": "Se utiliza `s.connect(('127.0.0.1', 2000))` para conectar un cliente TCP a un servidor en `localhost` puerto `2000`."
-    },
-    {
-        "question": "Crea un programa en Python que implemente un cliente TCP que se conecte al servidor en `localhost` puerto `2000`, envíe el mensaje 'Hola Servidor' y espere la respuesta.",
-        "type": "code",
-        "answer": "import socket\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 2000\n    mensaje = 'Hola Servidor'\n    \n    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:\n        s.connect((HOST, PORT))\n        s.sendall(mensaje.encode('utf-8'))\n        datos = s.recv(1024)\n    \n    print(f'Recibido del servidor: {datos.decode()}')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import socket", "socket.socket", "s.connect", "s.sendall", "s.recv"],
-        "explanation": "El programa crea un cliente TCP que se conecta a un servidor, envía un mensaje y espera una respuesta."
-    },
-    {
-        "question": "¿Qué método del objeto `socketserver.UDPServer` en Python se utiliza para iniciar la escucha de conexiones entrantes?",
-        "type": "multiple-choice",
-        "options": [
-            "listen",
-            "serve_forever",
-            "start",
-            "bind"
-        ],
-        "answer": 1,
-        "explanation": "El método `serve_forever` inicia la escucha de conexiones entrantes en un servidor UDP."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para leer el contenido de un archivo en modo binario, se utiliza `open('archivo', '____')`.",
-        "type": "fill-in-the-blank",
-        "answer": "'rb'",
-        "explanation": "Se utiliza `open('archivo', 'rb')` para abrir un archivo en modo de lectura binaria."
-    },
-    {
-        "question": "Crea un programa en Python que lea un archivo llamado `datos.bin`, lo encripte utilizando AES en modo CFB con una clave de 16 bytes, y guarde el resultado en `datos_encriptados.bin`.",
-        "type": "code",
-        "answer": "from Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\ndef encriptar_archivo(file_origen, file_destino, clave):\n    cipher = AES.new(clave, AES.MODE_CFB)\n    iv = cipher.iv\n    with open(file_origen, 'rb') as f_in, open(file_destino, 'wb') as f_out:\n        f_out.write(iv)\n        while True:\n            data = f_in.read(1024)\n            if not data:\n                break\n            cifrado = cipher.encrypt(data)\n            f_out.write(cifrado)\n    print(f'Archivo {file_origen} encriptado como {file_destino}')\n\nif __name__ == '__main__':\n    clave = get_random_bytes(16)\n    file_origen = 'datos.bin'\n    file_destino = 'datos_encriptados.bin'\n    encriptar_archivo(file_origen, file_destino, clave)",
-        "validation": ["from Crypto.Cipher import AES", "cipher.encrypt", "f_in.read", "f_out.write"],
-        "explanation": "El programa encripta un archivo en bloques de 1024 bytes utilizando AES en modo CFB y guarda el IV y los datos cifrados en un nuevo archivo."
-    },
-    {
-        "question": "¿Qué método del objeto `Queue` en Python se utiliza para indicar que se ha terminado de procesar un elemento retirado de la cola?",
-        "type": "multiple-choice",
-        "options": [
-            "done",
-            "complete",
-            "task_done",
-            "finish"
+            "set",
+            "clear",
+            "wait",
+            "toggle"
         ],
         "answer": 2,
-        "explanation": "El método `task_done` se utiliza para indicar que se ha terminado de procesar un elemento retirado de la cola."
+        "explanation": "El método `wait` bloquea el hilo hasta que el evento sea establecido mediante `set`."
     },
     {
-        "question": "Rellena el espacio en blanco: En Python, para importar todas las funciones del módulo `os`, se utiliza `from os import ______`.",
+        "question": "¿Qué método del objeto `threading.Event` en Python se utiliza para establecer el evento, permitiendo que los hilos que están esperando continúen su ejecución?",
+        "type": "multiple-choice",
+        "options": [
+            "set",
+            "clear",
+            "wait",
+            "toggle"
+        ],
+        "answer": 0,
+        "explanation": "El método `set` del objeto `threading.Event` establece el evento, permitiendo que los hilos que están esperando continúen."
+    },
+    {
+        "question": "Rellena el espacio en blanco: En Python, para crear una condición que permite a los hilos esperar y notificarse mutuamente, se utiliza la clase `______` del módulo `threading`.",
         "type": "fill-in-the-blank",
-        "answer": "*",
-        "explanation": "Se utiliza `from os import *` para importar todas las funciones y variables del módulo `os`."
+        "answer": "Condition",
+        "explanation": "La clase `Condition` del módulo `threading` se utiliza para crear condiciones de espera y notificación entre hilos."
     },
     {
-        "question": "Crea un programa en Python que utilice `threading.Event` para sincronizar dos hilos: uno que espera hasta que el evento sea establecido y otro que establece el evento después de 3 segundos.",
-        "type": "code",
-        "answer": "import threading\nimport time\n\ndef esperar_evento(evento):\n    print('Hilo 1 esperando el evento...')\n    evento.wait()\n    print('Hilo 1 recibió el evento')\n\ndef establecer_evento(evento):\n    time.sleep(3)\n    print('Hilo 2 estableciendo el evento')\n    evento.set()\n\nevento = threading.Event()\n\nt1 = threading.Thread(target=esperar_evento, args=(evento,))\nt2 = threading.Thread(target=establecer_evento, args=(evento,))\n\nt1.start()\nt2.start()\n\nt1.join()\nt2.join()",
-        "validation": ["import threading", "threading.Event", "evento.wait", "evento.set"],
-        "explanation": "El programa sincroniza dos hilos utilizando un evento: uno espera el evento y el otro lo establece después de 3 segundos."
-    },
-    {
-        "question": "¿Cuál es el propósito del método `process_iter` en el módulo `psutil` en Python?",
+        "question": "¿Cuál es la función del método `process_iter` en el módulo `psutil` en Python?",
         "type": "multiple-choice",
         "options": [
             "Iterar sobre las interfaces de red",
@@ -837,167 +368,68 @@
         "explanation": "El método `process_iter` se utiliza para iterar sobre todos los procesos activos en el sistema."
     },
     {
-        "question": "Rellena el espacio en blanco: En Python, para asegurar que un bloque de código se ejecute sin interrupciones por múltiples hilos, se utiliza `with lock:` donde `lock` es una instancia de `______`.",
-        "type": "fill-in-the-blank",
-        "answer": "Lock",
-        "explanation": "Se utiliza `with lock:` donde `lock` es una instancia de `Lock` para asegurar la exclusión mutua."
-    },
-    {
-        "question": "Crea un programa en Python que implemente un servidor TCP que acepte múltiples conexiones utilizando hilos y responda con 'Conexión exitosa' a cada cliente.",
+        "question": "Crea un programa en Python que implemente un productor-consumidor utilizando una cola (`Queue`) donde el productor añade números del 1 al 10 y el consumidor los imprime.",
         "type": "code",
-        "answer": "import socket\nimport threading\n\ndef manejar_cliente(conn, addr):\n    print(f'Conexión desde {addr}')\n    conn.sendall(b'Conexión exitosa')\n    conn.close()\n\ndef main():\n    HOST = '0.0.0.0'\n    PORT = 2000\n    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:\n        s.bind((HOST, PORT))\n        s.listen()\n        print(f'Servidor TCP escuchando en {HOST}:{PORT}')\n        while True:\n            conn, addr = s.accept()\n            hilo = threading.Thread(target=manejar_cliente, args=(conn, addr))\n            hilo.start()\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import threading", "threading.Thread", "hilo.start"],
-        "explanation": "El programa crea un servidor TCP que acepta múltiples conexiones concurrentemente utilizando hilos y responde con 'Conexión exitosa' a cada cliente."
+        "answer": "import threading\nimport queue\nimport time\n\ndef productor(q):\n    for i in range(1, 11):\n        q.put(i)\n        print(f'Productor añadió: {i}')\n        time.sleep(0.5)\n    q.put(None)  # Señal para el consumidor\n\ndef consumidor(q):\n    while True:\n        item = q.get()\n        if item is None:\n            break\n        print(f'Consumidor procesó: {item}')\n        q.task_done()\n\nq = queue.Queue()\n\nt_prod = threading.Thread(target=productor, args=(q,))\nt_cons = threading.Thread(target=consumidor, args=(q,))\n\nt_prod.start()\nt_cons.start()\n\nt_prod.join()\nq.join()\n",
+        "validation": ["import queue", "threading.Thread", "q.put", "q.get"],
+        "explanation": "El programa implementa un productor que añade números a una cola y un consumidor que los procesa, utilizando hilos para la concurrencia."
     },
     {
-        "question": "¿Qué método del objeto `socket` en Python se utiliza para escuchar hasta que se recibe una conexión entrante?",
+        "question": "Rellena el espacio en blanco: En Python, para crear una barrera (`Barrier`) que sincronice a 5 hilos, se utiliza `threading.Barrier(_____)`.",
+        "type": "fill-in-the-blank",
+        "answer": "5",
+        "explanation": "Se utiliza `threading.Barrier(5)` para crear una barrera que sincroniza a 5 hilos."
+    },
+    {
+        "question": "Crea un programa en Python que inicie 5 hilos que esperen en una barrera y, una vez que todos lleguen, impriman 'Todos los hilos han llegado a la barrera'.",
+        "type": "code",
+        "answer": "import threading\nimport time\nimport random\n\ndef tarea(barrier, id):\n    time.sleep(random.uniform(0.1, 2.0))\n    print(f'Hilo {id} llegó a la barrera')\n    barrier.wait()\n    print(f'Todos los hilos han llegado a la barrera. Hilo {id} continúa')\n\nif __name__ == '__main__':\n    barrier = threading.Barrier(5)\n    hilos = [threading.Thread(target=tarea, args=(barrier, i)) for i in range(1, 6)]\n    for t in hilos:\n        t.start()\n    for t in hilos:\n        t.join()",
+        "validation": ["import threading", "threading.Barrier", "barrier.wait"],
+        "explanation": "El programa crea 5 hilos que esperan en una barrera y continúan una vez que todos han llegado, imprimiendo mensajes antes y después de la sincronización."
+    },
+    {
+        "question": "¿Qué método del objeto `Semaphore` en Python se utiliza para liberar un permiso, incrementando el contador del semáforo?",
         "type": "multiple-choice",
         "options": [
-            "listen",
-            "recv",
-            "send",
-            "accept"
-        ],
-        "answer": 0,
-        "explanation": "El método `listen` se utiliza para poner el socket en modo de escucha hasta que se recibe una conexión entrante."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para establecer una conexión segura con un servidor utilizando SSL, se utiliza `ssl.wrap_socket(socket, ______)`.",
-        "type": "fill-in-the-blank",
-        "answer": "server_side=True",
-        "explanation": "Se utiliza `ssl.wrap_socket(socket, server_side=True)` para establecer una conexión SSL como servidor."
-    },
-    {
-        "question": "Crea un programa en Python que implemente un cliente TCP que se conecte a un servidor SSL en `localhost` puerto `4444`, envíe el mensaje 'Hola SSL' y reciba una respuesta.",
-        "type": "code",
-        "answer": "import socket\nimport ssl\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 4444\n    mensaje = 'Hola SSL'\n    \n    context = ssl.create_default_context()\n    \n    with socket.create_connection((HOST, PORT)) as sock:\n        with context.wrap_socket(sock, server_hostname=HOST) as ssock:\n            ssock.sendall(mensaje.encode('utf-8'))\n            datos = ssock.recv(1024)\n    \n    print(f'Recibido del servidor: {datos.decode()}')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import ssl", "ssl.create_default_context", "context.wrap_socket", "ssock.sendall"],
-        "explanation": "El programa crea un cliente TCP seguro utilizando SSL, envía un mensaje al servidor y espera una respuesta."
-    },
-    {
-        "question": "¿Qué función del módulo `json` en Python se utiliza para convertir una cadena JSON en un objeto de Python?",
-        "type": "multiple-choice",
-        "options": [
-            "load",
-            "loads",
-            "dump",
-            "dumps"
+            "acquire",
+            "release",
+            "wait",
+            "notify"
         ],
         "answer": 1,
-        "explanation": "La función `json.loads` se utiliza para convertir una cadena JSON en un objeto de Python."
+        "explanation": "El método `release` se utiliza para liberar un permiso en un semáforo, incrementando su contador."
     },
     {
-        "question": "Rellena el espacio en blanco: En Python, para iniciar un servidor TCP que maneje cada conexión en un hilo separado utilizando `socketserver`, se debe heredar de `socketserver.ThreadingMixIn` y `socketserver.TCPServer`. La clase resultante se llamará `ThreadedTCPServer` y se definirá de la siguiente manera: `class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer): pass`.",
+        "question": "Rellena el espacio en blanco: En Python, para detener un hilo que está esperando en una condición (`Condition`), se puede utilizar el método `____` para notificar a todos los hilos que esperaban.",
         "type": "fill-in-the-blank",
-        "answer": "ThreadingMixIn",
-        "explanation": "La clase `ThreadingMixIn` se utiliza para crear un servidor multihilo al heredarse junto con `socketserver.TCPServer`."
+        "answer": "notify_all",
+        "explanation": "El método `notify_all` se utiliza para notificar a todos los hilos que están esperando en una condición."
     },
     {
-        "question": "Crea un programa en Python que implemente un cliente UDP que envíe el mensaje 'Hola UDP Server' al servidor en `localhost` puerto `2000` y reciba una respuesta.",
+        "question": "Crea un programa en Python que utilice una condición (`Condition`) para que un hilo espere hasta que otro hilo cambie el valor de una variable compartida.",
         "type": "code",
-        "answer": "import socket\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 2000\n    mensaje = b'Hola UDP Server'\n    \n    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:\n        s.sendto(mensaje, (HOST, PORT))\n        datos, servidor = s.recvfrom(1024)\n        print(f'Recibido del servidor: {datos.decode()}')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import socket", "socket.socket", "s.sendto", "s.recvfrom"],
-        "explanation": "El programa crea un cliente UDP que envía un mensaje al servidor y espera una respuesta, imprimiéndola luego."
+        "answer": "import threading\nimport time\n\ndef esperar(cond, data):\n    with cond:\n        cond.wait()\n        print(f'Variable actualizada: {data['valor']}')\n\ndef actualizar(cond, data):\n    with cond:\n        time.sleep(2)\n        data['valor'] = 10\n        print('Variable actualizada por el hilo de actualización')\n        cond.notify()\n\ncond = threading.Condition()\ndata = {'valor': 0}\n\nt1 = threading.Thread(target=esperar, args=(cond, data))\nt2 = threading.Thread(target=actualizar, args=(cond, data))\n\nt1.start()\nt2.start()\n\nt1.join()\nt2.join()",
+        "validation": ["import threading", "threading.Condition", "cond.wait", "cond.notify"],
+        "explanation": "El programa sincroniza dos hilos utilizando una condición: uno espera a que la variable `data['valor']` sea actualizada por otro hilo."
     },
     {
-        "question": "¿Qué método del objeto `Event` en el módulo `threading` en Python se utiliza para restablecer el estado del evento a no establecido?",
+        "question": "¿Cuál es la función del método `process_iter` en el módulo `psutil` en Python?",
         "type": "multiple-choice",
         "options": [
-            "reset",
-            "clear",
-            "unset",
-            "restart"
+            "Iterar sobre las interfaces de red",
+            "Iterar sobre los procesos activos",
+            "Iterar sobre los archivos abiertos",
+            "Iterar sobre las conexiones de red"
         ],
         "answer": 1,
-        "explanation": "El método `clear` se utiliza para restablecer el estado del evento a no establecido."
+        "explanation": "El método `process_iter` se utiliza para iterar sobre todos los procesos activos en el sistema."
     },
     {
-        "question": "Rellena el espacio en blanco: En Python, para asegurar que una función en un hilo no sea interrumpida, se puede utilizar un objeto `Lock` y envolver la sección crítica con `with lock: ____`.",
-        "type": "fill-in-the-blank",
-        "answer": "sección_crítica",
-        "explanation": "Dentro del bloque `with lock:`, se coloca la sección crítica que debe ejecutarse de forma exclusiva."
-    },
-    {
-        "question": "Crea un programa en Python que inicie 5 hilos que acceden a una variable global `contador`. Utiliza un `Lock` para asegurar que solo un hilo pueda incrementar `contador` a la vez.",
+        "question": "Crea un programa en Python que implemente un productor-consumidor utilizando una cola (`Queue`) donde el productor añade números del 1 al 10 y el consumidor los imprime.",
         "type": "code",
-        "answer": "import threading\n\ndef incrementar_contador(lock, id):\n    global contador\n    for _ in range(1000):\n        with lock:\n            contador += 1\n\ncontador = 0\nlock = threading.Lock()\n\nhilos = [threading.Thread(target=incrementar_contador, args=(lock, i)) for i in range(5)]\n\nfor t in hilos:\n    t.start()\n\nfor t in hilos:\n    t.join()\n\nprint(f'Valor final del contador: {contador}')",
-        "validation": ["import threading", "threading.Lock", "with lock:"],
-        "explanation": "El programa utiliza un bloqueo para asegurar que solo un hilo pueda incrementar la variable `contador` a la vez, evitando condiciones de carrera."
-    },
-    {
-        "question": "¿Qué método del objeto `Thread` en Python se utiliza para iniciar la ejecución de un hilo?",
-        "type": "multiple-choice",
-        "options": [
-            "run",
-            "start",
-            "execute",
-            "begin"
-        ],
-        "answer": 1,
-        "explanation": "El método `start` se utiliza para iniciar la ejecución de un hilo en Python."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para esperar a que todos los hilos en una lista `hilos` terminen su ejecución, se puede utilizar un bucle `for` con `hilo.join()`, de la siguiente manera: `for hilo in hilos: hilo.____()`.",
-        "type": "fill-in-the-blank",
-        "answer": "join",
-        "explanation": "Se utiliza `hilo.join()` para esperar a que cada hilo termine su ejecución."
-    },
-    {
-        "question": "Crea un programa en Python que inicie 3 hilos que realicen una tarea simple (como imprimir un mensaje), y luego espera a que todos los hilos terminen antes de imprimir 'Todos los hilos han finalizado'.",
-        "type": "code",
-        "answer": "import threading\nimport time\n\ndef tarea(id):\n    print(f'Hilo {id} iniciando')\n    time.sleep(2)\n    print(f'Hilo {id} finalizando')\n\nhilos = [threading.Thread(target=tarea, args=(i,)) for i in range(1, 4)]\n\nfor t in hilos:\n    t.start()\n\nfor t in hilos:\n    t.join()\n\nprint('Todos los hilos han finalizado')",
-        "validation": ["import threading", "threading.Thread", "t.start", "t.join"],
-        "explanation": "El programa crea tres hilos que ejecutan una tarea simple, los inicia y luego espera a que todos terminen antes de imprimir un mensaje final."
-    },
-    {
-        "question": "¿Qué método del objeto `AES` en el módulo `Crypto.Cipher` se utiliza para crear un nuevo objeto AES con una clave y un modo de operación específicos?",
-        "type": "multiple-choice",
-        "options": [
-            "new",
-            "create",
-            "initialize",
-            "setup"
-        ],
-        "answer": 0,
-        "explanation": "El método `AES.new` se utiliza para crear un nuevo objeto AES con una clave y un modo de operación específicos."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para verificar si una cadena contiene solo caracteres válidos en el cifrado César, se puede utilizar una lista de caracteres y la expresión `if caracter in ____:`.",
-        "type": "fill-in-the-blank",
-        "answer": "alfabeto",
-        "explanation": "Se verifica si `caracter` está en la lista `alfabeto` para asegurar que sea válido en el cifrado César."
-    },
-    {
-        "question": "Crea un programa en Python que implemente un cifrado César que sustituya cada letra por la siguiente en el alfabeto (A→B, B→C, ..., Z→A). Incluye funciones para cifrar y descifrar mensajes.",
-        "type": "code",
-        "answer": "def cifrar_cesar(mensaje, shift=1):\n    alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'\n    mensaje_cifrado = ''\n    for char in mensaje.upper():\n        if char in alfabeto:\n            index = alfabeto.index(char)\n            mensaje_cifrado += alfabeto[(index + shift) % len(alfabeto)]\n        else:\n            mensaje_cifrado += char\n    return mensaje_cifrado\n\ndef descifrar_cesar(mensaje_cifrado, shift=1):\n    alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'\n    mensaje_descifrado = ''\n    for char in mensaje_cifrado.upper():\n        if char in alfabeto:\n            index = alfabeto.index(char)\n            mensaje_descifrado += alfabeto[(index - shift) % len(alfabeto)]\n        else:\n            mensaje_descifrado += char\n    return mensaje_descifrado\n\nif __name__ == '__main__':\n    mensaje = 'Hola Mundo!'\n    cifrado = cifrar_cesar(mensaje)\n    descifrado = descifrar_cesar(cifrado)\n    print(f'Mensaje original: {mensaje}')\n    print(f'Mensaje cifrado: {cifrado}')\n    print(f'Mensaje descifrado: {descifrado}')",
-        "validation": ["def cifrar_cesar", "alfabeto.index", "mensaje_cifrado += alfabeto[(index + shift) % len(alfabeto)]", "def descifrar_cesar"],
-        "explanation": "El programa implementa un cifrado César simple con funciones para cifrar y descifrar mensajes, manejando la sustitución de letras y manteniendo otros caracteres sin cambios."
-    },
-    {
-        "question": "¿Qué clase del módulo `Crypto.Cipher` en Python se utiliza para encriptar y desencriptar datos utilizando el algoritmo AES?",
-        "type": "multiple-choice",
-        "options": [
-            "DES",
-            "AES",
-            "RSA",
-            "DSA"
-        ],
-        "answer": 1,
-        "explanation": "La clase `AES` del módulo `Crypto.Cipher` se utiliza para encriptar y desencriptar datos utilizando el algoritmo AES."
-    },
-    {
-        "question": "Rellena el espacio en blanco: En Python, para generar bytes aleatorios necesarios para claves criptográficas, se utiliza la función `os.urandom(_____)`.",
-        "type": "fill-in-the-blank",
-        "answer": "número_de_bytes",
-        "explanation": "Se utiliza `os.urandom(número_de_bytes)` para generar una secuencia de bytes aleatorios adecuados para claves criptográficas."
-    },
-    {
-        "question": "Crea un programa en Python que genere una clave AES de 32 bytes, encripte el mensaje 'Seguridad con AES' en modo CFB, y luego lo desencripte, verificando que el mensaje original y el desencriptado sean iguales.",
-        "type": "code",
-        "answer": "from Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\ndef encriptar_mensaje(mensaje, clave):\n    cipher = AES.new(clave, AES.MODE_CFB)\n    iv = cipher.iv\n    ciphertext = cipher.encrypt(mensaje.encode('utf-8'))\n    return iv, ciphertext\n\ndef desencriptar_mensaje(iv, ciphertext, clave):\n    cipher = AES.new(clave, AES.MODE_CFB, iv=iv)\n    mensaje = cipher.decrypt(ciphertext).decode('utf-8')\n    return mensaje\n\nif __name__ == '__main__':\n    clave = get_random_bytes(32)  # Clave de 32 bytes para AES-256\n    mensaje_original = 'Seguridad con AES'\n    \n    iv, ciphertext = encriptar_mensaje(mensaje_original, clave)\n    mensaje_descifrado = desencriptar_mensaje(iv, ciphertext, clave)\n    \n    print(f'Mensaje original: {mensaje_original}')\n    print(f'Mensaje descifrado: {mensaje_descifrado}')\n    \n    assert mensaje_original == mensaje_descifrado, 'Los mensajes no coinciden'",
-        "validation": ["from Crypto.Cipher import AES", "AES.new", "cipher.encrypt", "cipher.decrypt"],
-        "explanation": "El programa encripta y luego desencripta un mensaje utilizando AES en modo CFB, verificando que el mensaje original y el desencriptado sean iguales."
+        "answer": "import threading\nimport queue\nimport time\n\ndef productor(q):\n    for i in range(1, 11):\n        q.put(i)\n        print(f'Productor añadió: {i}')\n        time.sleep(0.5)\n    q.put(None)  # Señal para el consumidor\n\ndef consumidor(q):\n    while True:\n        item = q.get()\n        if item is None:\n            break\n        print(f'Consumidor procesó: {item}')\n        q.task_done()\n\nq = queue.Queue()\n\nt_prod = threading.Thread(target=productor, args=(q,))\nt_cons = threading.Thread(target=consumidor, args=(q,))\n\nt_prod.start()\nt_cons.start()\n\nt_prod.join()\nq.join()\n",
+        "validation": ["import queue", "threading.Thread", "q.put", "q.get"],
+        "explanation": "El programa implementa un productor que añade números a una cola y un consumidor que los procesa, utilizando hilos para la concurrencia."
     },
     {
         "question": "¿Qué clase del módulo `socketserver` en Python se utiliza para manejar solicitudes de clientes utilizando streams de entrada y salida?",
@@ -1012,16 +444,35 @@
         "explanation": "La clase `StreamRequestHandler` se utiliza para manejar solicitudes de clientes utilizando streams de entrada y salida."
     },
     {
-        "question": "Rellena el espacio en blanco: En Python, para generar una firma digital utilizando DSA, se crea un objeto `____` del módulo `Crypto.Signature.DSS`.",
-        "type": "fill-in-the-blank",
-        "answer": "DSS",
-        "explanation": "Se crea un objeto `DSS` del módulo `Crypto.Signature.DSS` para generar una firma digital utilizando DSA."
+        "question": "Crea un programa en Python que implemente un cliente UDP que envíe el mensaje 'Hola UDP Server' al servidor en `localhost` puerto `2000` y reciba una respuesta.",
+        "type": "code",
+        "answer": "import socket\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 2000\n    mensaje = b'Hola UDP Server'\n    \n    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:\n        s.sendto(mensaje, (HOST, PORT))\n        datos, servidor = s.recvfrom(1024)\n        print(f'Recibido del servidor: {datos.decode()}')\n\nif __name__ == '__main__':\n    main()",
+        "validation": ["import socket", "socket.socket", "s.sendto", "s.recvfrom"],
+        "explanation": "El programa crea un cliente UDP que envía un mensaje al servidor y espera una respuesta, imprimiéndola luego."
     },
     {
-        "question": "Crea un programa en Python que implemente un servidor TCP que acepte conexiones y envíe el mensaje 'Bienvenido al servidor TCP' a cada cliente que se conecte.",
+        "question": "¿Qué método del objeto `threading.Event` en Python se utiliza para establecer el evento, permitiendo que los hilos que están esperando continúen su ejecución?",
+        "type": "multiple-choice",
+        "options": [
+            "set",
+            "clear",
+            "wait",
+            "toggle"
+        ],
+        "answer": 0,
+        "explanation": "El método `set` del objeto `threading.Event` establece el evento, permitiendo que los hilos que están esperando continúen."
+    },
+    {
+        "question": "Rellena el espacio en blanco: En Python, para crear una condición que permite a los hilos esperar y notificarse mutuamente, se utiliza la clase `______` del módulo `threading`.",
+        "type": "fill-in-the-blank",
+        "answer": "Condition",
+        "explanation": "La clase `Condition` del módulo `threading` se utiliza para crear condiciones de espera y notificación entre hilos."
+    },
+    {
+        "question": "Crea un programa en Python que implemente un cliente TCP que se conecte al servidor en `localhost` puerto `2000`, envíe el mensaje 'Hola Servidor' y espere la respuesta.",
         "type": "code",
-        "answer": "import socket\n\ndef main():\n    HOST = '0.0.0.0'\n    PORT = 2000\n    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:\n        s.bind((HOST, PORT))\n        s.listen()\n        print(f'Servidor TCP escuchando en {HOST}:{PORT}')\n        while True:\n            conn, addr = s.accept()\n            with conn:\n                print(f'Conexión desde {addr}')\n                conn.sendall(b'Bienvenido al servidor TCP')\n\nif __name__ == '__main__':\n    main()",
-        "validation": ["import socket", "socket.socket", "s.bind", "s.listen", "s.accept", "conn.sendall"],
-        "explanation": "El programa crea un servidor TCP que escucha en el puerto 2000 y envía un mensaje de bienvenida a cada cliente que se conecta."
+        "answer": "import socket\n\ndef main():\n    HOST = '127.0.0.1'\n    PORT = 2000\n    mensaje = 'Hola Servidor'\n    \n    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:\n        s.connect((HOST, PORT))\n        s.sendall(mensaje.encode('utf-8'))\n        datos = s.recv(1024)\n    \n    print(f'Recibido del servidor: {datos.decode()}')\n\nif __name__ == '__main__':\n    main()",
+        "validation": ["import socket", "socket.socket", "s.connect", "s.sendall", "s.recv"],
+        "explanation": "El programa crea un cliente TCP que se conecta a un servidor, envía un mensaje y espera una respuesta."
     }
 ]

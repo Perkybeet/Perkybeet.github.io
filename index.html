@@ -487,7 +487,7 @@
                 </label>
                 <label>
                     <input type="radio" name="mode" value="timed">
-                    Cuestionario temporizado (20s por pregunta)
+                    Cuestionario temporizado (1 minuto por pregunta)
                 </label>
             </div>
             <div class="form-group">
@@ -519,7 +519,7 @@
                 <input type="file" id="importBtn" accept=".json">
             </div>
             <div class="form-group">
-                <p id="totalTime">Tiempo total: 100 segundos</p>
+                <p id="totalTime">Tiempo total: -</p>
             </div>
             <button type="button" id="startQuizBtn">Comenzar Cuestionario</button>
         </form>
@@ -568,7 +568,7 @@
     <!-- Tu script principal -->
     <script>
         const QUESTIONS_URL = 'questions.json'; // Ruta al archivo JSON con las preguntas
-        const secondsPerQuestion = 20;
+        const secondsPerQuestion = 60;
         let questions = [];
         let selectedQuestions = [];
         let userAnswers = [];
