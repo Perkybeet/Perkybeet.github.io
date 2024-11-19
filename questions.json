@@ -220,7 +220,7 @@
     {
         "question": "Crea un programa en Python que liste todos los procesos activos en el sistema utilizando el módulo `psutil`.",
         "type": "code",
-        "answer": "import psutil\n\nfor proc in psutil.process_iter(['pid', 'name']):\n    try:\n        print(f'PID: {proc.info["pid"]}, Nombre: {proc.info["name"]}')\n    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):\n        pass",
+        "answer": "import psutil\n\nfor proc in psutil.process_iter(['pid', 'name']):\n    try:\n        print(f'PID: {proc.info['pid']}, Nombre: {proc.info['name']}')\n    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):\n        pass",
         "validation": ["import psutil", "psutil.process_iter", "proc.info"],
         "explanation": "El programa itera sobre todos los procesos activos y imprime su PID y nombre utilizando el módulo `psutil`."
     },
@@ -395,7 +395,7 @@
     {
         "question": "Crea un programa en Python que utilice una condición (`Condition`) para sincronizar dos hilos: uno que espera a que una variable alcance cierto valor y otro que actualiza la variable.",
         "type": "code",
-        "answer": "import threading\nimport time\n\ndef esperar(cond, shared_data):\n    with cond:\n        cond.wait_for(lambda: shared_data['valor'] >= 5)\n        print('Valor alcanzó 5 o más:', shared_data['valor'])\n\ndef actualizar(cond, shared_data):\n    with cond:\n        for i in range(6):\n            shared_data['valor'] += 1\n            print(f'Actualizando valor a {shared_data["valor"]}')\n            time.sleep(1)\n        cond.notify_all()\n\ncond = threading.Condition()\nshared_data = {'valor': 0}\n\nt1 = threading.Thread(target=esperar, args=(cond, shared_data))\nt2 = threading.Thread(target=actualizar, args=(cond, shared_data))\n\nt1.start()\nt2.start()\n\nt1.join()\nt2.join()",
+        "answer": "import threading\nimport time\n\ndef esperar(cond, shared_data):\n    with cond:\n        cond.wait_for(lambda: shared_data['valor'] >= 5)\n        print('Valor alcanzó 5 o más:', shared_data['valor'])\n\ndef actualizar(cond, shared_data):\n    with cond:\n        for i in range(6):\n            shared_data['valor'] += 1\n            print(f'Actualizando valor a {shared_data['valor']}')\n            time.sleep(1)\n        cond.notify_all()\n\ncond = threading.Condition()\nshared_data = {'valor': 0}\n\nt1 = threading.Thread(target=esperar, args=(cond, shared_data))\nt2 = threading.Thread(target=actualizar, args=(cond, shared_data))\n\nt1.start()\nt2.start()\n\nt1.join()\nt2.join()",
         "validation": ["import threading", "threading.Condition", "cond.wait_for", "cond.notify_all"],
         "explanation": "El programa sincroniza dos hilos utilizando una condición: uno espera a que `shared_data['valor']` alcance 5 y otro lo actualiza."
     },
@@ -620,7 +620,7 @@
     {
         "question": "Crea un programa en Python que utilice una condición (`Condition`) para que un hilo espere hasta que otro hilo cambie el valor de una variable compartida.",
         "type": "code",
-        "answer": "import threading\nimport time\n\ndef esperar(cond, data):\n    with cond:\n        cond.wait()\n        print(f'Variable actualizada: {data["valor"]}')\n\ndef actualizar(cond, data):\n    with cond:\n        time.sleep(2)\n        data['valor'] = 10\n        print('Variable actualizada por el hilo de actualización')\n        cond.notify()\n\ncond = threading.Condition()\ndata = {'valor': 0}\n\nt1 = threading.Thread(target=esperar, args=(cond, data))\nt2 = threading.Thread(target=actualizar, args=(cond, data))\n\nt1.start()\nt2.start()\n\nt1.join()\nt2.join()",
+        "answer": "import threading\nimport time\n\ndef esperar(cond, data):\n    with cond:\n        cond.wait()\n        print(f'Variable actualizada: {data['valor']}')\n\ndef actualizar(cond, data):\n    with cond:\n        time.sleep(2)\n        data['valor'] = 10\n        print('Variable actualizada por el hilo de actualización')\n        cond.notify()\n\ncond = threading.Condition()\ndata = {'valor': 0}\n\nt1 = threading.Thread(target=esperar, args=(cond, data))\nt2 = threading.Thread(target=actualizar, args=(cond, data))\n\nt1.start()\nt2.start()\n\nt1.join()\nt2.join()",
         "validation": ["import threading", "threading.Condition", "cond.wait", "cond.notify"],
         "explanation": "El programa sincroniza dos hilos utilizando una condición: uno espera a que la variable `data['valor']` sea actualizada por otro hilo."
     },
